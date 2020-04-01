@@ -38,4 +38,12 @@ $hot_newposts_image = "$url_images/topic_read_hot.gif";
 $posticon = "$url_images/posticon.png";
 $posticon_more = "$url_images/icon_pages.gif";
 $locked_image = "$url_images/lock.png";
+
+define('latex_picture_path', "//home/efstratia/Documents/di/examino 8/prostasia/openeclass/modules/latexrender/pictures");
+define('latex_picture_path_httpd',"//home/efstratia/Documents/di/examino 8/prostasia/openeclass/modules/latexrender/pictures");
+define('latex_tmp_dir',"//home/efstratia/Documents/di/examino 8/prostasia/openeclass/modules/latexrender/tmp");
+define('latex_path',"/usr/bin/latex");
+define('dvips_path',"/usr/bin/dvips");
+define('convert_path',"/usr/bin/convert");
+define('identify_path',"usr/bin/identify");
 ?>
