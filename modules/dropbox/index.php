@@ -277,6 +277,11 @@ if (!isset($_GET['mailing']))  // RH: Mailing detail: no received files
 	$i = 0;
 	foreach ($dropbox_person -> receivedWork as $w)
 	{
+	    $t = htmlspecialchars($w->title, ENT_QUOTES, 'UTF-8');
+	    $d = htmlspecialchars($w->description, ENT_QUOTES, 'UTF-8');
+	    $a = htmlspecialchars($w->author, ENT_QUOTES, 'UTF-8');
+	    $secId = htmlspecialchars($w->id, ENT_QUOTES, 'UTF-8');
+
 		if ($w -> uploaderId == $uid)  // RH: justUpload
 		{
 			$numberDisplayed -= 1; continue;
@@ -290,16 +295,16 @@ if (!isset($_GET['mailing']))  // RH: Mailing detail: no received files
         <td width=\"3\"><img src=\"../../template/classic/img/inbox.gif\" title=\"$dropbox_lang[receivedTitle]\" /></td>
         <td>";
 
-		$tool_content .= "<a href='dropbox_download.php?id=".urlencode($w->id)."' target=_blank>".$w->title."</a>";
+		$tool_content .= "<a href='dropbox_download.php?id=".urlencode($secId)."' target=_blank>".$t."</a>";
 
 		$fSize = ceil(($w->filesize)/1024);
 		$tool_content .= <<<tCont9
         <small>&nbsp;&nbsp;&nbsp;($fSize kB)</small>
         <br />
-        <small>$w->description</small>
+        <small>$d</small>
         </td>
 tCont9;
-		$tool_content .= "<td>$w->author</td><td>".$w->uploadDate;
+		$tool_content .= "<td>$a</td><td>".$w->uploadDate;
 
 		if ($w->uploadDate != $w->lastUploadDate)
 		{
@@ -311,7 +316,7 @@ tCont9;
         <td><div class=\"cellpos\">";
 
 	$tool_content .= "
-        <a href=\"dropbox_submit.php?deleteReceived=".urlencode($w->id)."&amp;dropbox_unid=".urlencode($dropbox_unid)."\" onClick='return confirmation(\"$w->title\");'>
+        <a href=\"dropbox_submit.php?deleteReceived=".urlencode($secId)."&amp;dropbox_unid=".urlencode($dropbox_unid)."\" onClick='return confirmation(\"$t\");'>
         <img src=\"../../template/classic/img/delete-small.png\" title=\"$langDelete\" /></a>";
 
 	$tool_content .= "</div></td></tr>";
