@@ -277,10 +277,10 @@ if (!isset($_GET['mailing']))  // RH: Mailing detail: no received files
 	$i = 0;
 	foreach ($dropbox_person -> receivedWork as $w)
 	{
-	    $t = htmlspecialchars($w->title, ENT_QUOTES, 'UTF-8');
-	    $d = htmlspecialchars($w->description, ENT_QUOTES, 'UTF-8');
-	    $a = htmlspecialchars($w->author, ENT_QUOTES, 'UTF-8');
-	    $secId = htmlspecialchars($w->id, ENT_QUOTES, 'UTF-8');
+	    $w->title = htmlspecialchars($w->title, ENT_QUOTES, 'UTF-8');
+	    $w->description = htmlspecialchars($w->description, ENT_QUOTES, 'UTF-8');
+	    $w->author = htmlspecialchars($w->author, ENT_QUOTES, 'UTF-8');
+	    $w->id = htmlspecialchars($w->id, ENT_QUOTES, 'UTF-8');
 
 		if ($w -> uploaderId == $uid)  // RH: justUpload
 		{
@@ -295,16 +295,16 @@ if (!isset($_GET['mailing']))  // RH: Mailing detail: no received files
         <td width=\"3\"><img src=\"../../template/classic/img/inbox.gif\" title=\"$dropbox_lang[receivedTitle]\" /></td>
         <td>";
 
-		$tool_content .= "<a href='dropbox_download.php?id=".urlencode($secId)."' target=_blank>".$t."</a>";
+		$tool_content .= "<a href='dropbox_download.php?id=".urlencode($w->id)."' target=_blank>".$w->title."</a>";
 
 		$fSize = ceil(($w->filesize)/1024);
 		$tool_content .= <<<tCont9
         <small>&nbsp;&nbsp;&nbsp;($fSize kB)</small>
         <br />
-        <small>$d</small>
+        <small>$w->description</small>
         </td>
 tCont9;
-		$tool_content .= "<td>$a</td><td>".$w->uploadDate;
+		$tool_content .= "<td>$w->author</td><td>".$w->uploadDate;
 
 		if ($w->uploadDate != $w->lastUploadDate)
 		{
@@ -316,7 +316,7 @@ tCont9;
         <td><div class=\"cellpos\">";
 
 	$tool_content .= "
-        <a href=\"dropbox_submit.php?deleteReceived=".urlencode($secId)."&amp;dropbox_unid=".urlencode($dropbox_unid)."\" onClick='return confirmation(\"$t\");'>
+        <a href=\"dropbox_submit.php?deleteReceived=".urlencode($w->id)."&amp;dropbox_unid=".urlencode($dropbox_unid)."\" onClick='return confirmation(\"$w->title\");'>
         <img src=\"../../template/classic/img/delete-small.png\" title=\"$langDelete\" /></a>";
 
 	$tool_content .= "</div></td></tr>";
@@ -444,6 +444,11 @@ foreach ($dropbox_person -> sentWork as $w)
 {
 	$langSentTo = $dropbox_lang["sentTo"] . '&nbsp;';  // RH: Mailing: not for unsent
 
+    $w->title = htmlspecialchars($w->title, ENT_QUOTES, 'UTF-8');
+    $w->description = htmlspecialchars($w->description, ENT_QUOTES, 'UTF-8');
+    $w->recipients = htmlspecialchars($w->recipients, ENT_QUOTES, 'UTF-8');
+    $w->id = htmlspecialchars($w->id, ENT_QUOTES, 'UTF-8');
+
 	// RH: Mailing: clickable folder image for detail
 
 	if ( $w->recipients[0]['id'] > $dropbox_cnf["mailingIdBase"])
@@ -453,7 +458,7 @@ foreach ($dropbox_person -> sentWork as $w)
 	}
 	else
 	{
-		$ahref = "dropbox_download.php?id=" . urlencode($w->id) . $mailingInUrl;
+		$ahref = "dropbox_download.php?id=" . urlencode($w->id ) . $mailingInUrl;
 		$imgsrc = '../../template/classic/img/outbox.gif';
 	}
 	$fSize = ceil(($w->filesize)/1024);
@@ -464,17 +469,17 @@ foreach ($dropbox_person -> sentWork as $w)
             	}
 	$tool_content .= <<<tCont12
 
-		<td width="3"><img src="../../template/classic/img/outbox.gif" title="$w->title" /></td>
+		<td width="3"><img src="../../template/classic/img/outbox.gif" title="htmlspecialchars($w->title, ENT_QUOTES, 'UTF-8')" /></td>
 		<td ><a href="$ahref" target="_blank">
-		$w->title</a>
+		$t</a>
         <small>&nbsp;&nbsp;&nbsp;($fSize kB)</small>
         <br />
-        <small>$w->description</small></td>
+        <small> $w->description</small></td>
 
 tCont12;
 	$tool_content .="<td>";
 
-	foreach($w -> recipients as $r)
+	foreach($w->recipients as $r)
 	{
 		$tool_content .=  $r["name"] . ", <br>\n";
 	}
@@ -486,7 +491,7 @@ tCont12;
 	//<!--	Users cannot delete their own sent files -->
 
 	$tool_content .= "
-	<a href=\"dropbox_submit.php?deleteSent=".urlencode($w->id)."&amp;dropbox_unid=".urlencode($dropbox_unid) . $mailingInUrl."\"
+	<a href=\"dropbox_submit.php?deleteSent=".urlencode($w->id )."&amp;dropbox_unid=".urlencode($dropbox_unid) . $mailingInUrl."\"
 		onClick='return confirmation(\"$w->title\");'>
 		<img src=\"../../template/classic/img/delete-small.png\" title=\"$langDelete\" /></a>";
 	$tool_content .= "</div></td></tr>";

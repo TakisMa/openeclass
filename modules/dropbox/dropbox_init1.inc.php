@@ -147,7 +147,7 @@ function getUserNameFromId ($id)  // RH: Mailing: return 'Mailing ' + id
 function getLoginFromId ($id)
 {
     global $dropbox_cnf, $dropbox_lang, $mysqlMainDb;
-
+    /*TODO::να τσεκαρουμε αν το query που εκτελειται απο κατω μπορει να πειραξει με επικινδυνο τροπο την βαση. Δεν ελεγχεται και δεν ξερουμε που γινεται include. Η συναρτηση δεν φαινεται να χρησιμοποιειτια καπου αλλα μπορει να εχει καποιος προσβαση*/
     $sql = "SELECT username FROM `" . $dropbox_cnf["userTbl"] . "` WHERE user_id='" . addslashes($id) . "'";
     $result = db_query($sql,$mysqlMainDb);
     $res = mysql_fetch_array($result);
