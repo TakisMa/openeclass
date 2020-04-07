@@ -47,8 +47,7 @@ $head_content = "
 <script type='text/javascript'>
 function confirmation (name)
 {
-
-    if (confirm(\"$langDelWarn1 \"+ name + \". $langWarnForSubmissions. $langDelSure \"))
+    if (confirm(\"$langDelWarn1 \"+ \"<?php htmlspecialchars(name, ENT_QUOTES, UTF8); ?>\" + \". $langWarnForSubmissions. $langDelSure \"))
         {return true;}
     else
         {return false;}
@@ -449,6 +448,7 @@ function show_edit_assignment($id)
 	$nav[] = array("url"=>"work.php?id=$id", "name"=> $row['title']);
 
 	$deadline = $row['deadline'];
+	$row = array_map('htmlspecialchars', $row);
 
 
 	$description = q($row['description']);
