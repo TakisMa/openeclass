@@ -90,7 +90,7 @@ function get_auth_active_methods()
                         }
                 }
                 if(!empty($auth_methods)) {
-                        return $auth_methods;
+                        return array_map(htmlspecialchars,$auth_methods);
                 } else {
                         return 0;
                 }

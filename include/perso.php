@@ -53,8 +53,8 @@ if ($result2 and mysql_num_rows($result2) > 0) {
 	while ($mycours = mysql_fetch_array($result2)) {
 		$status[$mycours['code']] = $mycours['statut'];
 	}
-} 
-
+}
+$status=q($status);
 $_SESSION['status'] = $status;
 
 //include personalised component files (announcemets.php etc.) from /modules/perso
@@ -71,7 +71,7 @@ $_user['lastLogin'] = str_replace('-', ' ', $_user['persoLastLogin']);
 //	BEGIN user's status query]=====================================================
 $user_status_query = db_query("SELECT statut FROM user WHERE user_id = '$uid'", $mysqlMainDb);
 if ($row = mysql_fetch_row($user_status_query)) {
-	$statut = $row[0];
+	$statut = q($row[0]);
 }
 //	END user's status query]=======================================================
 

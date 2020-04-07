@@ -113,7 +113,7 @@ function draw($toolContent, $menuTypeID, $tool_css = null, $head_content = null,
 	if (strlen ( $extraMessage ) > 0) {
 		$messageBox = "<table width=\"99%\">
 		<tbody><tr><td class=\"extraMessage\">
-		$extraMessage</td></tr>
+		".htmlspecialchars($extraMessage,ENT_QUOTES,UTF8)."</td></tr>
 		</tbody></table><br/>";
 	}
 

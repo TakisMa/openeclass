@@ -152,9 +152,9 @@ function autoquote($s) {
 // Unquote string if needed (if magic quotes are on)
 function autounquote($s) {
         if (get_magic_quotes_gpc()) {
-        	return stripslashes($s);
+        	return q(stripslashes($s));
         } else {
-        	return $s;
+        	return q($s);
         }
 }
 
@@ -176,17 +176,17 @@ function escapeSimple($str)
 	global $db;
 	if (get_magic_quotes_gpc())
 	{
-		return $str;
+		return htmlspecialchars($str,ENT_QUOTES,UTF8);
 	}
 	else
 	{
 		if (function_exists('mysql_real_escape_string'))
 		{
-			return @mysql_real_escape_string($str, $db);
+			return htmlspecialchars(@mysql_real_escape_string($str, $db),ENT_QUOTES,UTF8);
 		}
 		else
 		{
-			return @mysql_escape_string($str);
+			return htmlspecialchars(@mysql_escape_string($str),ENT_QUOTES,UTF8);
 		}
 	}
 }
@@ -226,7 +226,7 @@ function uid_to_username($uid)
 	if ($r = mysql_fetch_row(db_query(
 	"SELECT username FROM user WHERE user_id = '".mysql_real_escape_string($uid)."'",
 	$mysqlMainDb))) {
-		return $r[0];
+		return htmlspecialchars($r[0],ENT_QUOTES,UTF8);
 	} else {
 		return FALSE;
 	}
@@ -239,7 +239,7 @@ function uid_to_name($uid)
 
 	if ($r = mysql_fetch_row(db_query("SELECT CONCAT(nom, ' ', prenom)
 		FROM user WHERE user_id = '".mysql_real_escape_string($uid)."'", $mysqlMainDb))) {
-		return $r[0];
+        return htmlspecialchars($r[0],ENT_QUOTES,UTF8);
 	} else {
 		return FALSE;
 	}
@@ -251,7 +251,7 @@ function uid_to_firstname($uid)
 
         if ($r = mysql_fetch_row(db_query("SELECT prenom
 		FROM user WHERE user_id = '".mysql_real_escape_string($uid)."'", $mysqlMainDb))) {
-                return $r[0];
+            return htmlspecialchars($r[0],ENT_QUOTES,UTF8);
         } else {
                 return FALSE;
         }
@@ -265,7 +265,7 @@ function uid_to_surname($uid)
 
         if ($r = mysql_fetch_row(db_query("SELECT nom
 		FROM user WHERE user_id = '".mysql_real_escape_string($uid)."'", $mysqlMainDb))) {
-                return $r[0];
+            return htmlspecialchars($r[0],ENT_QUOTES,UTF8);
         } else {
                 return FALSE;
         }
@@ -278,7 +278,7 @@ function uid_to_email($uid)
 
         if ($r = mysql_fetch_row(db_query("SELECT email
 		FROM user WHERE user_id = '".mysql_real_escape_string($uid)."'", $mysqlMainDb))) {
-                return $r[0];
+            return htmlspecialchars($r[0],ENT_QUOTES,UTF8);
         } else {
                 return FALSE;
         }
@@ -292,7 +292,7 @@ function uid_to_am($uid)
 
 	if ($r = mysql_fetch_array(db_query("SELECT am from user
 		WHERE user_id = '$uid'", $mysqlMainDb))) {
-	return $r[0];
+        return htmlspecialchars($r[0],ENT_QUOTES,UTF8);
 		} else {
 			return FALSE;
 		}
@@ -310,7 +310,7 @@ function user_group($uid, $required = TRUE)
 	$currentCourseID);
 	if ($res) {
 		$secret = mysql_fetch_row($res);
-		return $secret[0];
+		return htmlspecialchars($secret[0],ENT_QUOTES,UTF8);
 	} else {
 		if ($required) {
 			die("Error: user tried to submit group work but doesn't belong in a group!");
@@ -326,7 +326,7 @@ function gid_to_name($gid)
 	global $currentCourseID;
 	if ($r = mysql_fetch_row(db_query("SELECT name FROM student_group
 		WHERE id = '".mysql_real_escape_string($gid)."'", $currentCourseID))) {
-                return $r[0];
+        return htmlspecialchars($r[0],ENT_QUOTES,UTF8);
 	} else {
                 return FALSE;
 	}
@@ -342,8 +342,8 @@ function group_secret($gid)
 	$currentCourseID);
 	if ($res) {
 		$secret = mysql_fetch_row($res);
-		return $secret[0];
-	} else {
+        return htmlspecialchars($secret[0],ENT_QUOTES,UTF8);
+    } else {
 		die("Error: group $gid doesn't exist");
 	}
 }
@@ -374,6 +374,7 @@ function selection($entries, $name, $default = '', $extra = '')
 	}
 	$retString .= "</select>\n";
 	return $retString;
+
 }
 
 /********************************************************************
@@ -511,7 +512,7 @@ function html2text ($string)
 	$desc = preg_replace('/[\n\r\t]/',' ',$desc);
 	$desc = preg_replace('/  /',' ',$desc);
 
-	return $desc;
+	return htmlspecialchars($desc,ENT_QUOTES,UTF8);
 	//    return strtr (strip_tags($string), $trans_tbl);
 }
 
@@ -535,7 +536,7 @@ function imap_auth($server, $username, $password)
 		}
 		fclose ($fp);
 	}
-	return $auth;
+	return htmlspecialchars($auth,ENT_QUOTES,UTF8);
 }
 
 function imap_literal($s)
@@ -593,12 +594,12 @@ function find_faculty_by_id($id) {
 	$req = mysql_query("SELECT name FROM faculte WHERE id = $id");
 	if ($req and mysql_num_rows($req)) {
 		$fac = mysql_fetch_row($req);
-		return $fac[0];
+		return htmlspecialchars($fac[0],ENT_QUOTES,UTF8);
 	} else {
 		$req = mysql_query("SELECT name FROM faculte WHERE name = '" . addslashes($id) ."'");
 		if ($req and mysql_num_rows($req)) {
 			$fac = mysql_fetch_row($req);
-			return $fac[0];
+			return htmlspecialchars($fac[0],ENT_QUOTES,UTF8);
 		}
 	}
 	return false;
@@ -644,7 +645,7 @@ function greek_format($date) {
 function nice_format($date) {
 
 	if ($GLOBALS['language'] == 'greek')
-		return greek_format($date);
+		greek_format($date);
 	else
 		return $date;
 
@@ -677,7 +678,7 @@ function last_login($uid)
         if (!$last_login) {
                 $last_login = date('Y-m-d');
         }
-        return $last_login;
+        return htmlspecialchars($last_login,ENT_QUOTES,UTF8);
 }
 
 
@@ -748,7 +749,7 @@ function user_get_data($user_id)
 
     if (mysql_num_rows($result)) {
         $data = mysql_fetch_array($result);
-        return $data;
+        return htmlspecialchars($data,ENT_QUOTES,UTF8);
     }
     else
     {
@@ -1212,7 +1213,7 @@ function course_code_to_title($code)
         $r = db_query("SELECT intitule FROM cours WHERE code='$code'", $mysqlMainDb);
         if ($r and mysql_num_rows($r) > 0) {
                 $row = mysql_fetch_row($r);
-                return $row[0];
+                return htmlspecialchars($row[0],ENT_QUOTES,UTF8);
         } else {
                 return false;
         }
@@ -1226,7 +1227,7 @@ function course_code_to_id($code)
         $r = db_query("SELECT cours_id FROM cours WHERE code='$code'", $mysqlMainDb);
         if ($r and mysql_num_rows($r) > 0) {
                 $row = mysql_fetch_row($r);
-                return $row[0];
+                return htmlspecialchars($row[0],ENT_QUOTES,UTF8);
 	} else {
                 return false;
 	}
@@ -1259,7 +1260,7 @@ function get_config($key)
         $r = db_query("SELECT value FROM config WHERE `key` = '$key'");
         if ($r and mysql_num_rows($r) > 0) {
                 $row = mysql_fetch_row($r);
-                return $row[0];
+                return htmlspecialchars($row[0],ENT_QUOTES,UTF8);
         } else {
                 return false;
         }

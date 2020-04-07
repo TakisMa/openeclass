@@ -146,12 +146,12 @@ if (isset($_SESSION['shib_uname'])) { // authenticate via shibboleth
 		} else {
 			$warning = '';
 			$log='yes';
-			$_SESSION['nom'] = $nom;
-			$_SESSION['prenom'] = $prenom;
-			$_SESSION['email'] = $email;
+			$_SESSION['nom'] = q($nom);
+			$_SESSION['prenom'] = q($prenom);
+			$_SESSION['email'] = q($email);
 			$_SESSION['statut'] = $statut;
 			$_SESSION['is_admin'] = $is_admin;
-			$_SESSION['uid'] = $uid;
+			$_SESSION['uid'] = q($uid);
 			mysql_query("INSERT INTO loginout (loginout.idLog, loginout.id_user, loginout.ip, loginout.when, loginout.action)
 			VALUES ('', '$uid', '$_SERVER[REMOTE_ADDR]', NOW(), 'LOGIN')");
 		}
