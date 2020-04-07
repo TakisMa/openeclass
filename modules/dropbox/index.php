@@ -446,8 +446,8 @@ foreach ($dropbox_person -> sentWork as $w)
 
     $w->title = htmlspecialchars($w->title, ENT_QUOTES, 'UTF-8');
     $w->description = htmlspecialchars($w->description, ENT_QUOTES, 'UTF-8');
-    $w->recipients = htmlspecialchars($w->recipients, ENT_QUOTES, 'UTF-8');
     $w->id = htmlspecialchars($w->id, ENT_QUOTES, 'UTF-8');
+    $w->author = htmlspecialchars($w->author, ENT_QUOTES, 'UTF-8');
 
 	// RH: Mailing: clickable folder image for detail
 
@@ -471,7 +471,7 @@ foreach ($dropbox_person -> sentWork as $w)
 
 		<td width="3"><img src="../../template/classic/img/outbox.gif" title="htmlspecialchars($w->title, ENT_QUOTES, 'UTF-8')" /></td>
 		<td ><a href="$ahref" target="_blank">
-		$t</a>
+		$w->title</a>
         <small>&nbsp;&nbsp;&nbsp;($fSize kB)</small>
         <br />
         <small> $w->description</small></td>
@@ -481,7 +481,7 @@ tCont12;
 
 	foreach($w->recipients as $r)
 	{
-		$tool_content .=  $r["name"] . ", <br>\n";
+		$tool_content .= htmlspecialchars( $r["name"], ENT_QUOTES, 'UTF-8') . ", <br>\n";
 	}
 	$tool_content = strrev(substr(strrev($tool_content), 7));
 

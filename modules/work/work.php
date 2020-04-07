@@ -354,20 +354,22 @@ function new_assignment()
 	$year	= date("Y");
 
 
+
+
 	$tool_content .= "
   <form action='work.php' method='post' onsubmit='return checkrequired(this, \"title\");'>
     <table width='99%' class='FormData'>
     <tbody>
     <tr>
       <th width='220'>&nbsp;</th>
-      <td><b>$m[WorkInfo]</b></td>
+      <td><b>".htmlspecialchars($m[WorkInfo], ENT_QUOTES, UTF8)."</b></td>
     </tr>
     <tr>
-      <th class='left'>$m[title]:</th>
+      <th class='left'>".htmlspecialchars($m[title], ENT_QUOTES, UTF8).":</th>
       <td><input type='text' name='title' size='55' class='FormData_InputText' /></td>
     </tr>
     <tr>
-      <th class='left'>$m[description]:</th>
+      <th class='left'>".htmlspecialchars($m[description], ENT_QUOTES, UTF8).":</th>
       <td>
         <table class='xinha_editor'>
         <tr>
@@ -381,15 +383,15 @@ function new_assignment()
       </td>
     </tr>
     <tr>
-      <th class='left'>$m[comments]:</th>
+      <th class='left'>".htmlspecialchars($m[comments], ENT_QUOTES, UTF8) .":</th>
       <td><textarea name='comments' rows='3' cols='53' class='FormData_InputText'></textarea></td>
     </tr>
     <tr>
-      <th class='left'>$m[deadline]:</th>
+      <th class='left'>". htmlspecialchars($m[deadline], ENT_QUOTES, UTF8) .":</th>
       <td>$end_cal_Work</td>
     </tr>
     <tr>
-      <th class='left'>$m[group_or_user]:</th>
+      <th class='left'>". htmlspecialchars($m[group_or_user], ENT_QUOTES, UTF8) .":</th>
       <td><input type='radio' name='group_submissions' value='0' checked='1' />$m[user_work]
       <br /><input type='radio' name='group_submissions' value='1' />$m[group_work]</td>
     </tr>
@@ -652,6 +654,9 @@ function assignment_details($id, $row, $message = null)
 	global $tool_content, $m, $langDaysLeft, $langDays, $langWEndDeadline, $langNEndDeadLine, $langNEndDeadline, $langEndDeadline;
 	global $langDelAssign, $is_adminOfCourse, $langZipDownload, $langSaved ;
 
+    $id=htmlspecialchars($id,ENT_QUOTES,UTF8);
+    $row=array_map(htmlspecialchars,$row); //TODO::πειραζει την περιγραφη στην βαση και τυπωνει σκουπιδια. Παρολαυτα ο τιτλος και τα σχολια φαινεται να εμφανιζονται κομπλε. Και στις 2 περιπτωσεις το XSS αποφευγεται.
+    $message=htmlspecialchars($message,ENT_QUOTES,UTF8);
 
 	if ($is_adminOfCourse) {
 	$tool_content .= "
@@ -776,7 +781,8 @@ function show_assignment($id, $message = FALSE)
 
 	if ($message) {
 		assignment_details($id, $row, $message);
-	} else {
+	}
+	else {
 		assignment_details($id, $row);
 	}
 
@@ -885,6 +891,7 @@ cData;
 		$i = 1;
 		while ($row = mysql_fetch_array($result))
 		{
+		    $row=array_map(htmlspecialchars,$row);
 			//is it a group assignment?
 			if (!empty($row['group_id'])) {
 				$subContentGroup = "($m[groupsubmit] ".
