@@ -40,6 +40,7 @@ switch($myrow["password"])
 }
 $auth_method_settings = get_auth_settings($auth);
 if($myrow['password'] == $auth_method_settings['auth_name']) {
+	$myrow=array_map(htmlspecialchars,$myrow);
 	switch($auth) {
 		case '2': $pop3host = str_replace("pop3host=","",$auth_method_settings['auth_settings']);
 		break;

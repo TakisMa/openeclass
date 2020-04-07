@@ -190,10 +190,10 @@ unset($_SESSION['pass']);
 unset($_SESSION['nom']);
 unset($_SESSION['prenom']);
 
-$_SESSION['uname'] = $username_form;
-$_SESSION['pass'] = $password_form;
-$_SESSION['nom'] = $nom_form;
-$_SESSION['prenom'] = $prenom_form;
+$_SESSION['uname'] = q($username_form);
+$_SESSION['pass'] = q($password_form);
+$_SESSION['nom'] = q($nom_form);
+$_SESSION['prenom'] = q($prenom_form);
 
 ##[BEGIN personalisation modification]############IT DOES NOT UPDATE THE DB!!!
 if (isset($_SESSION['perso_is_active'])) {

@@ -33,6 +33,7 @@ if ($uname == escapeSimpleSelect($myrow["username"]))
 {
 	if (md5($pass) == escapeSimpleSelect($myrow["password"])) {
 		// check if account is active
+        $myrow=array_map(htmlspecialchars,$myrow);
 		$is_active = check_activity($myrow["user_id"]);
 		if ($myrow["user_id"] == 1) {
 			$is_active = 1;

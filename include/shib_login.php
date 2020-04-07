@@ -51,9 +51,10 @@ if (mysql_num_rows($r) > 0) { // if shibboleth user found
 		// update user information
 		db_query("UPDATE user SET nom = '$shib_nom', prenom = '$shib_prenom', email = '$shib_email' 
 			WHERE username = '$shib_uname'");
-
+        $myrow=array_map(htmlspecialchars,$myrow);
 		$r2 = db_query($sqlLogin);
 		while ($myrow2 = mysql_fetch_array($r2)) {
+            $myrow2=array_map(htmlspecialchars,$myrow2);
 			$uid = $myrow2["user_id"];
 			$is_admin = $myrow2["is_admin"];
 			$userPerso = $myrow2["perso"];
@@ -75,10 +76,10 @@ if (mysql_num_rows($r) > 0) { // if shibboleth user found
 	$prenom = $shib_prenom;
 	$language = $_SESSION['langswitch'] = langcode_to_name('el');
 }
-$_SESSION['uid'] = $uid;
-$_SESSION['nom'] = $nom;
-$_SESSION['prenom'] = $prenom;
-$_SESSION['email'] = $shib_email;
+$_SESSION['uid'] = htmlspecialchars($uid);
+$_SESSION['nom'] =q($nom);
+$_SESSION['prenom'] = q($prenom);
+$_SESSION['email'] = q($shib_email);
 $_SESSION['statut'] = 5;
 $_SESSION['is_admin'] = $is_admin;
 $_SESSION['shib_user'] = 1; // now we are shibboleth user
