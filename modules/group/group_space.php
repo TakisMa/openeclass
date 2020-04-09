@@ -134,6 +134,7 @@ while ($myGroup = mysql_fetch_array($resultGroup))
 		FROM `$mysqlMainDb`.user, student_group
 		WHERE user.user_id=student_group.tutor
 		AND student_group.id='$userGroupId'");
+	$sqlTutor=array_map('htmlspecialchars',$sqlTutor);
 	$countTutor = mysql_num_rows($sqlTutor);
 	$tool_content_tutor="";
 	if ($countTutor==0) {
@@ -183,6 +184,7 @@ if(($countMember==0)) {
 	$tool_content .=  "<tr><td colspan=3>$langGroupNoneMasc</td></tr>";
 } else {
 	while ($myMember = mysql_fetch_array($resultMember)){
+	    $myMember=array_map('htmlspecialchars',$myMember);
 		$tool_content .= "<tr><td>$myMember[nom] $myMember[prenom]</td>
 		<td><div align=\"center\">";
 		if (!empty($myMember['am'])) {

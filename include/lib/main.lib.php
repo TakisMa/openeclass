@@ -645,7 +645,7 @@ function greek_format($date) {
 function nice_format($date) {
 
 	if ($GLOBALS['language'] == 'greek')
-		greek_format($date);
+		return greek_format($date);
 	else
 		return $date;
 
