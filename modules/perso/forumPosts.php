@@ -86,6 +86,7 @@ function getUserForumPosts($param, $type)
 		}
 
 		while ($myForumPosts = mysql_fetch_row($mysql_query_result)) {
+		    $myForumPosts=array_map('q',$myForumPosts);
 			if ($myForumPosts){
 				array_push($forumContent, $myForumPosts);
 			}

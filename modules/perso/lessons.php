@@ -79,6 +79,7 @@ function getUserLessonInfo($uid, $type)
 	$repeat_val = 0;
 	//getting user's lesson info
 	while ($mycourses = mysql_fetch_array($mysql_query_result)) {
+	    $mycourses=array_map('q',$mycourses);
 		$lesson_id[$repeat_val] 	= $mycourses['cours_id'];
 		$lesson_titles[$repeat_val] 	= $mycourses['title'];
 		$lesson_code[$repeat_val]	= $mycourses['code'];
@@ -92,6 +93,7 @@ function getUserLessonInfo($uid, $type)
 		FROM user WHERE user.user_id = $uid";
 	$memory_result = db_query($memory, $mysqlMainDb);
 	while ($my_memory_result = mysql_fetch_row($memory_result)) {
+	    $my_memory_result=array_map('q',$my_memory_result);
 		$lesson_announce_f = str_replace('-', ' ', $my_memory_result[0]);
 		$lesson_doc_f = str_replace('-', ' ', $my_memory_result[1]);
 		$lesson_forum_f = str_replace('-', ' ', $my_memory_result[2]);

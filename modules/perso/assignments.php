@@ -81,6 +81,7 @@ function getUserAssignments($param, $type)
 
 		$assignments_repeat_val=0;
 		while($myAssignments = mysql_fetch_row($mysql_query_result)){
+		    $myAssignments=array_map('q',$myAssignments);
 			if ($myAssignments) {
 				if ($submission = findSubmission($uid, $myAssignments[0], $lesson_code[$i])) {
 					$lesson_assign[$i][$assignments_repeat_val]['delivered'] = 1; //delivered
