@@ -57,15 +57,15 @@ function cours_table_header($statut)
                 $legend = "(? $statut ?)";
         }
 
-	$tool_content .= "<p><b><font color='#a33033'>$legend</font></b></p>
+	$tool_content .= "<p><b><font color='#a33033'>".q($legend)."</font></b></p>
 	                 <script type='text/javascript' src='modules/auth/sorttable.js'></script>
                          <table style='border: 1px solid #edecdf;' width='99%'>
                          <tr><td>
                          <table width='100%' align='center' class='sortable' id='t1'>
                          <thead><tr>
-                         <th class='left' colspan='2' style='border: 1px solid #edecdf;'>$langCourseCode</th>
-                         <th width='150' class='left' style='border: 1px solid #edecdf;'>$langTeacher</th>
-                         <th width='60' style='border: 1px solid #edecdf;'>$manage</th>
+                         <th class='left' colspan='2' style='border: 1px solid #edecdf;'>".q($langCourseCode)."</th>
+                         <th width='150' class='left' style='border: 1px solid #edecdf;'>".q($langTeacher)."</th>
+                         <th width='60' style='border: 1px solid #edecdf;'>".q($manage)."</th>
                          </tr></thead><tbody>";
 }
 
@@ -87,6 +87,7 @@ if ($result2 and mysql_num_rows($result2) > 0) {
         $this_statut = 0;
 	// display courses
 	while ($mycours = mysql_fetch_array($result2)) {
+	    $mycours=array_map('q',$mycours);
                 $old_statut = $this_statut;
                 $this_statut = $mycours['statut'];
                 if ($k == 0 or $old_statut <> $this_statut) {
@@ -169,9 +170,9 @@ if (count($status) > 0) {
                                                 $tool_content .= "\n<tr class='odd'>";
                                         }
                                         $tool_content .= "<td width='1' class='square_bullet2'>&nbsp;</td>" .
-                                                         "<td class='announce_pos'><b>$ann[title]</b> " .
+                                                         "<td class='announce_pos'><b>".q($ann[title])."</b> " .
                                                          nice_format($ann['temps']) .
-                                                         "&nbsp;&nbsp;&nbsp;&nbsp;($langCourse: <b>{$titles[$code]}</b> | $langTutor: <b>{$profs[$code]}</b>)<br />$content</td>\n</tr>";
+                                                         "&nbsp;&nbsp;&nbsp;&nbsp;(".q($langCourse).": <b>{".q($titles[$code])."}</b> | $langTutor: <b>{".q($profs[$code])."}</b>)<br />".q($content)."</td>\n</tr>";
                                         $la++;
                                 }
                         }

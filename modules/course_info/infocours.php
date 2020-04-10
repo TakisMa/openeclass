@@ -147,19 +147,19 @@ if (isset($_POST['submit'])) {
 			WHERE cours.code='$currentCourseID'
 			AND cours_faculte.code='$currentCourseID'";
 		$result = mysql_query($sql);
-		$c = mysql_fetch_array($result);
-		$title = q($c['intitule']);
+		$c =array_map('q',mysql_fetch_array($result));
+		$title = $c['intitule'];
 		$facu = $c['faculteid'];
 		$type = $c['type'];
 		$visible = $c['visible'];
 		$visibleChecked[$visible] = " checked='1'";
-		$fake_code = q($c['fake_code']);
-		$titulary = q($c['titulaires']);
+		$fake_code = $c['fake_code'];
+		$titulary = $c['titulaires'];
 		$languageCourse	= $c['languageCourse'];
-		$description = q($c['description']);
-		$course_keywords = q($c['course_keywords']);
+		$description = $c['description'];
+		$course_keywords = $c['course_keywords'];
 		$course_addon = q($c['course_addon']);
-		$password = q($c['password']);
+		$password = $c['password'];
 		$checkpasssel = empty($password)? '': " checked='1'";
 
 		@$tool_content .="
