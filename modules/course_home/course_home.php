@@ -68,6 +68,7 @@ $action->record('MODULE_ID_UNITS');
 $sql = 'SELECT `description`,`course_keywords`, `course_addon`,`faculte`,`lastEdit`,`type`, `visible`, `titulaires`, `fake_code` FROM `cours` WHERE `code` = "'.$currentCourse.'"';
 $res = db_query($sql, $mysqlMainDb);
 while($result = mysql_fetch_row($res)) {
+    $result=array_map('q',$result);
 	$description = trim($result[0]);
 	$keywords = trim($result[1]);
 	$addon = nl2br(trim($result[2]));
