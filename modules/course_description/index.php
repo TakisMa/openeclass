@@ -69,26 +69,27 @@ $sql = "SELECT `id`,`title`,`content` FROM `course_description` order by id";
 $res = db_query($sql, $currentCourseID);
 if (mysql_num_rows($res) > 0) {
 	while ($bloc = mysql_fetch_array($res)) {
-	$tool_content .= "
-    <br />
-
-    <table width='99%' class='CourseDescr'>
-    <thead>
-    <tr>
-      <td>
-        <table width='100%' class='FormData'>
+	    $bloc=array_map('q',$bloc);
+        $tool_content .= "
+        <br />
+    
+        <table width='99%' class='CourseDescr'>
+        <thead>
         <tr>
-          <th class='left' style='border: 1px solid #edecdf;'><u>$bloc[title]</u></th>
+          <td>
+            <table width='100%' class='FormData'>
+            <tr>
+              <th class='left' style='border: 1px solid #edecdf;'><u>$bloc[title]</u></th>
+            </tr>
+            </table>
+          </td>
         </tr>
-        </table>
-      </td>
-    </tr>
-    <tr>
-      <td colspan='2'>".mathfilter(make_clickable(nl2br($bloc['content'])), 12, "../../courses/mathimg/")."</td>
-    </tr>
-    </table>";
+        <tr>
+          <td colspan='2'>".mathfilter(make_clickable(nl2br($bloc['content'])), 12, "../../courses/mathimg/")."</td>
+        </tr>
+        </table>";
 
-	$tool_content .= "<br />";
+        $tool_content .= "<br />";
 	}
 } else {
 	$tool_content .= "<p class='alert1'>$langThisCourseDescriptionIsEmpty</p>";

@@ -123,7 +123,7 @@ if (!$q or mysql_num_rows($q) == 0) {
         draw('', 2, 'units', $head_content);
         exit;
 }
-$info = mysql_fetch_array($q);
+$info =array_map('q', mysql_fetch_array($q));
 $nameTools = htmlspecialchars($info['title']);
 $comments = trim($info['comments']);
 
@@ -198,6 +198,7 @@ $q = db_query("SELECT id, title FROM course_units
                      $visibility_check
                ORDER BY `order`", $mysqlMainDb);
 while ($info = mysql_fetch_array($q)) {
+        $info=array_map('q',$info);
         $selected = ($info['id'] == $id)? ' selected="1" ': '';
         $tool_content .= "<option value='$info[id]'$selected>" .
                          htmlspecialchars(ellipsize($info['title'], 40)) .
@@ -250,6 +251,7 @@ function show_resources($unit_id)
 
 function show_resource($info)
 {
+        $info=array_map('htmlspecialchars',$info);
         global $tool_content, $langUnknownResType, $is_adminOfCourse;
 	
         if ($info['visibility'] == 'i' and !$is_adminOfCourse) {

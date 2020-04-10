@@ -152,7 +152,7 @@ if (count($status) > 0) {
                                 AND `$code`.accueil.visible = 1
                                 AND `$code`.accueil.id = 7
                                 ORDER BY temps DESC", $mysqlMainDb);
-
+                $result=array_map('q',$result);
                 if ($result and mysql_num_rows($result) > 0) {
                         if ($table_begin) {
                                 $table_begin = false;

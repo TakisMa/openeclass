@@ -173,6 +173,7 @@ $sql = db_query($query);
 $first = true;
 $count_index = 1;
 while ($cu = mysql_fetch_array($sql)) {
+                $cu=array_map('q',$cu);
                 // Visibility icon
                 $vis = $cu['visibility'];
                 $icon_vis = ($vis == 'v')? 'visible.gif': 'invisible.gif';
