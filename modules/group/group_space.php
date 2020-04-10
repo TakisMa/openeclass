@@ -92,7 +92,7 @@ while ($myGroup = mysql_fetch_array($sqlGroup)) {
 // name and description
 mysql_select_db($dbname);
 $resultGroup=mysql_query("SELECT name, description, tutor, forumId FROM student_group WHERE id='$userGroupId'");
-while ($myGroup = mysql_fetch_array($resultGroup))
+while ($myGroup = htmlspecialchars(mysql_fetch_array($resultGroup)))
 {
         if ($myGroup['tutor'] == $uid) {
                 $is_tutor = true;
