@@ -57,6 +57,11 @@ if (isset($submit) && isset($changePass) && ($changePass == "do")) {
 		exit();
 	}
 
+	if ($_REQUEST['token'] !== $_SESSION['token']) {
+		header("location:". $passurl."?msg=3");
+		exit();
+	}
+
 	// check if passwd is too easy
 	$sql = "SELECT `nom`,`prenom` ,`username`,`email`,`am` FROM `user`WHERE `user_id`=".$_SESSION["uid"]." ";
 	$result = db_query($sql, $mysqlMainDb);
@@ -168,6 +173,7 @@ if (!isset($changePass)) {
 	<tr>
       <th>&nbsp;</th>
       <td><input type=\"Submit\" name=\"submit\" value=\"$langModify\"></td>
+      <input type='hidden' name='token' value=".$_SESSION['token']."></input>
     </tr>
 	</tbody>
     </table>
