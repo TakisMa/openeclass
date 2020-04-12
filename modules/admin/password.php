@@ -73,6 +73,7 @@ if (!isset($changePass)) {
   <tr>
     <th class=\"left\">&nbsp;</th>
     <td><input type=\"submit\" name=\"submit\" value=\"$langModify\"></td>
+    <input type='hidden' name='token' value=".$_SESSION['token']."></input>
   </tr>
   </tbody>
   </table>
@@ -89,6 +90,10 @@ elseif (isset($submit) && isset($changePass) && ($changePass == "do")) {
 	if ($_REQUEST['password_form1'] !== $_REQUEST['password_form']) {
 		$tool_content .= mes($langPassTwo, "", 'caution_small');
 		draw($tool_content, 3);
+		exit();
+	}
+	if ($_REQUEST['token'] != $_SESSION['token']) {
+		header("location:". $passurl."?msg=3");
 		exit();
 	}
 	//all checks ok. Change password!

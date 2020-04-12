@@ -57,7 +57,7 @@ if (isset($submit) && isset($changePass) && ($changePass == "do")) {
 		exit();
 	}
 
-	if ($_REQUEST['token'] !== $_SESSION['token']) {
+	if ($_REQUEST['token'] != $_SESSION['token']) {
 		header("location:". $passurl."?msg=3");
 		exit();
 	}
@@ -173,7 +173,7 @@ if (!isset($changePass)) {
 	<tr>
       <th>&nbsp;</th>
       <td><input type=\"Submit\" name=\"submit\" value=\"$langModify\"></td>
-      <input type='hidden' name='token' value=".$_SESSION['token']."></input>
+      <input type='hidden' class='FormData_InputText' name='token' value=".$_SESSION['token'].">
     </tr>
 	</tbody>
     </table>

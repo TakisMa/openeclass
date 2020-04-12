@@ -67,7 +67,7 @@ $tool_content = "";
 		MAIN BODY
 ******************************************************************************/
 // Save new config.php
-if (isset($submit))  {
+if (isset($submit) && !($_POST['token'] != $_SESSION['token']))  {
 	// Make config directory writable
 	@chmod( "../../config",777 );
 	@chmod( "../../config", 0777 );
@@ -306,6 +306,7 @@ $tool_content .= "
   <tr>
     <th class=\"left\">&nbsp;</th>
     <td><input type='submit' name='submit' value='$langModify'></td>
+    <input type='hidden' name='token' value=".$_SESSION['token']."></input>
   </tr>
   </tbody>
   </table>
