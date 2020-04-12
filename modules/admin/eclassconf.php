@@ -62,13 +62,17 @@ $nameTools = $langEclassConf;
 $navigation[] = array("url" => "index.php", "name" => $langAdmin);
 // Initialise $tool_content
 $tool_content = "";
-
+$passurl = $urlSecure.'modules/admin/eclassconf.php';
 /*****************************************************************************
 		MAIN BODY
 ******************************************************************************/
 // Save new config.php
-if (isset($submit) && !($_POST['token'] != $_SESSION['token']))  {
+if (isset($submit))  {
 	// Make config directory writable
+	if ($_POST['token'] != $_SESSION['token']) {
+		header("location:". $passurl."?msg=3");
+		exit();
+	}
 	@chmod( "../../config",777 );
 	@chmod( "../../config", 0777 );
 	// Create backup file
