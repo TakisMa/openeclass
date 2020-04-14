@@ -99,36 +99,42 @@ if ($count_prof_requests > 0) {
 $sql = "SELECT code, intitule, titulaires FROM cours ORDER BY cours_id DESC LIMIT 0,1";
 $result = mysql_query($sql);
 $myrow = mysql_fetch_array($result);
+$myrow=array_map('q',$myrow);
 $last_course_info = "<b>".$myrow['intitule']."</b> (".$myrow['code'].", ".$myrow['titulaires'].")";
 
 // Find last prof registration
 $sql = "SELECT prenom, nom, email, registered_at FROM user WHERE statut = 1 ORDER BY user_id DESC LIMIT 0,1";
 $result = mysql_query($sql);
 $myrow = mysql_fetch_array($result);
+$myrow=array_map('q',$myrow);
 $last_prof_info = "<b>".$myrow['prenom']." ".$myrow['nom']."</b> (".$myrow['email'].", ".date("j/n/Y H:i",$myrow['registered_at']).")";
 
 // Find last stud registration
 $sql = "SELECT prenom, nom, email, registered_at FROM user WHERE statut = 5 ORDER BY user_id DESC LIMIT 0,1";
 $result = mysql_query($sql);
 $myrow = mysql_fetch_array($result);
+$myrow=array_map('q',$myrow);
 $last_stud_info = "<b>".$myrow['prenom']." ".$myrow['nom']."</b> (".$myrow['email'].", ".date("j/n/Y H:i",$myrow['registered_at']).")";
 
 // Find admin's last login
 $sql = "SELECT `when` FROM loginout WHERE id_user = '".$uid."' AND action = 'LOGIN' ORDER BY `when` DESC LIMIT 1,1";
 $result = mysql_query($sql);
 $myrow = mysql_fetch_array($result);
+$myrow=array_map('q',$myrow);
 $lastadminlogin = strtotime($myrow['when']!=""?$myrow['when']:0);
 
 // Count profs registered after last login
 $sql = "SELECT COUNT(*) AS cnt FROM user WHERE statut = 1 AND registered_at > '".$lastadminlogin."'";
 $result = mysql_query($sql);
 $myrow = mysql_fetch_array($result);
+$myrow=array_map('q',$myrow);
 $lastregisteredprofs = $myrow['cnt'];
 
 // Count studs registered after last login
 $sql = "SELECT COUNT(*) AS cnt FROM user WHERE statut = 5 AND registered_at > '".$lastadminlogin."'";
 $result = mysql_query($sql);
 $myrow = mysql_fetch_array($result);
+$myrow=array_map('q',$myrow);
 $lastregisteredstuds = $myrow['cnt'];
 
 

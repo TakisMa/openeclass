@@ -266,6 +266,7 @@ $result = db_query("SELECT user.user_id, user.nom, user.prenom, user.email, user
 $tool_content .= "</thead>\n";
 
 while ($myrow = mysql_fetch_array($result)) {
+        $myrow=array_map('q',$myrow);
         // bi colored table
         if ($i%2 == 0) {
                 $tool_content .= "<tr>";

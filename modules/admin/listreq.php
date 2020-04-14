@@ -110,6 +110,7 @@ if (!empty($show) && ($show=="closed")) {
                                 WHERE (status = 2 AND statut = $list_statut)");
         	$k = 0;
 		while ($req = mysql_fetch_array($sql)) {
+		    $req=array_map('q',$req);
 			if ($k%2 == 0) {
 	              		$tool_content .= "\n  <tr>";
 	            	} else {
@@ -161,6 +162,7 @@ if (!empty($show) && ($show=="closed")) {
 
         	$k = 0;
 		while ($req = mysql_fetch_array($sql)) {
+            $req=array_map('q',$req);
 			if ($k%2==0) {
 	              		$tool_content .= "\n  <tr>";
 	            	} else {
@@ -208,6 +210,7 @@ if (!empty($show) && ($show=="closed")) {
     	$k = 0;
 	for ($j = 0; $j < mysql_num_rows($sql); $j++) {
 		$req = mysql_fetch_array($sql);
+        $req=array_map('q',$req);
 			if ($k%2==0) {
 	              $tool_content .= "\n  <tr>";
 	            } else {
@@ -275,6 +278,7 @@ $langEmail: $emailhelpdesk";
 			$r = db_query("SELECT comment, profname, profsurname, profemail, statut
 				FROM prof_request WHERE rid = '$id'");
 			$d = mysql_fetch_assoc($r);
+            $d=array_map('q',$d);
                         $warning = ($d['statut'] == 5)? $langWarnReject: $langGoingRejectRequest;
 			$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>
 			<table width='99%' class='FormData'>
@@ -325,6 +329,7 @@ else
                         WHERE (status = 1 AND statut = $list_statut)");
     	$k = 0;
 	while ($req = mysql_fetch_array($sql)) {
+        $req=array_map('q',$req);
 		if ($k%2 == 0) {
 	              $tool_content .= "\n<tr>";
 	            } else {
