@@ -63,9 +63,11 @@ $sql = "SELECT `date`, `{$qlang}_title` , `{$qlang}_body` , `{$qlang}_comment`
         FROM `admin_announcements`
         WHERE `visible` = 'V' ORDER BY `date` DESC";
 $result = db_query($sql, $mysqlMainDb);
+
 if (mysql_num_rows($result) > 0) {
 	$announceArr = array();
 	while ($eclassAnnounce = mysql_fetch_array($result)) {
+	    $eclassAnnounce=array_map('q',$eclassAnnounce);
 		array_push($announceArr, $eclassAnnounce);
 	}
         $tool_content .= "<br/>

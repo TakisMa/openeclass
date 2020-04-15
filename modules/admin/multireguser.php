@@ -21,6 +21,10 @@ $error = '';
 $acceptable_fields = array('first', 'last', 'email', 'id', 'phone', 'username');
 
 if (isset($_POST['submit'])) {
+        if ($_POST['token'] != $_SESSION['token']) {
+            header("location:". $passurl."?msg=3");
+            exit();
+        }
         $send_mail = isset($_POST['send_mail']) && $_POST['send_mail'];
         $unparsed_lines = '';
         $new_users_info = array();
@@ -30,7 +34,7 @@ if (isset($_POST['submit'])) {
         $fields = preg_split('/[ \t,]+/', $_POST['fields'], -1, PREG_SPLIT_NO_EMPTY);
         foreach ($fields as $field) {
                 if (!in_array($field, $acceptable_fields)) {
-                        $tool_content = "<p class='caution_small'>$langMultiRegFieldError <b>$field</b></p>";
+                        $tool_content = "<p class='caution_small'>".q($langMultiRegFieldError)." <b>".q($field)."</b></p>";
                         draw($tool_content, 3, 'admin');
                         exit;
                 }
@@ -99,16 +103,18 @@ if (isset($_POST['submit'])) {
                 $line = strtok("\n");
         }
         if (!empty($unparsed_lines)) {
-                $tool_content .= "<p><b>$langErrors</b></p><pre>$unparsed_lines</pre>";
+                $tool_content .= "<p><b>".htmlspecialchars($langErrors)."</b></p><pre>".q($unparsed_lines)."</pre>";
         }
-        $tool_content .= "<table><tr><th>$langSurname</th><th>$langName</th><th>e-mail</th><th>$langPhone</th><th>$langAm</th><th>username</th><th>password</th></tr>\n";
+        $tool_content .= "<table><tr><th>".q($langSurname)."</th><th>".q($langName)."</th><th>e-mail</th><th>".q($langPhone)."</th><th>".q($langAm)."</th><th>username</th><th>password</th></tr>\n";
         foreach ($new_users_info as $n) {
+                $n=array_map('q',$n);
                 $tool_content .= "<tr><td>$n[1]</td><td>$n[2]</td><td>$n[3]</td><td>$n[4]</td><td>$n[5]</td><td>$n[6]</td><td>$n[7]</td></tr>\n";
         }
         $tool_content .= "</table>\n";
 } else {
         $req = db_query("SELECT id, name FROM faculte order by id");
         while ($n = mysql_fetch_array($req)) {
+                $n=array_map('q',$n);
                 $facs[$n['id']] = $n['name'];
         }
         $tool_content .= "$langMultiRegUserInfo
@@ -141,6 +147,7 @@ if (isset($_POST['submit'])) {
         $langMultiRegSendMail</td>
 </tr>
 <tr><th>&nbsp;</th>
+    <input type='hidden' name='token' value=".$_SESSION['token'].">
     <td><input type='submit' name='submit' value='$langSubmit' /></td>
 </tr>
 </table>

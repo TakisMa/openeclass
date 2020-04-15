@@ -82,6 +82,7 @@ if (isset($_GET['delete'])) {
         $myrow = mysql_fetch_array($result);
 
         if ($myrow) {
+                $myrow=array_map('q',$myrow);
                 $id_hidden_input = "<input type='hidden' name='id' value='$myrow[id] />";
                 $titleToModify = q($myrow['gr_title']);
                 $contentToModify = $myrow['gr_body'];
@@ -94,6 +95,10 @@ if (isset($_GET['delete'])) {
         }
 } elseif (isset($_POST['submitAnnouncement'])) {
 	// submit announcement command
+    if ($_POST['token'] != $_SESSION['token']) {
+        header("location:". $passurl."?msg=3");
+        exit();
+    }
         if (isset($_POST['id'])) {
                 // modify announcement
                 $id = intval($_POST['id']);
@@ -169,6 +174,7 @@ if ($displayForm && (@$addAnnouce==1 || isset($modify))) {
                    <td><textarea name='comment_en' rows='2' cols='50' class='FormData_InputText'>$commentToModifyEn</textarea>
                        </td></tr>
               <tr><th class='left'>&nbsp;</th>
+              <input type='hidden' name='token' value=".$_SESSION['token'].">
                   <td><input type='submit' name='submitAnnouncement' value='$langSubmit' /></td></tr>
               <tr><td colspan='2'>&nbsp;</td></tr>
           </tbody>
@@ -194,6 +200,7 @@ if ($displayAnnouncementList == true) {
                         <td width='300'><b>".$langNameOfLang['english']."</b></td></tr>";
         }
         while ($myrow = mysql_fetch_array($result)) {
+                $myrow=array_map('q',$myrow);
                 $visibleAnn = $myrow['visible'];
                 if ($visibleAnn == 'I') {
                         $stylerow = "style='color: silver;'";

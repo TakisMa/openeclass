@@ -153,6 +153,7 @@ function reverseAll(cbList) {
 	$resultAll = db_query($sqll);
 	while ($myuser = mysql_fetch_array($resultAll))
 	{
+	    $myuser=array_map('q',$myuser);
 		$tool_content .= "<option value='$myuser[user_id]'>$myuser[nom] $myuser[prenom]</option>";
 	}
 
@@ -193,6 +194,7 @@ function reverseAll(cbList) {
 
 	$a=0;
 	while ($myStud = mysql_fetch_array($resultStud)) {
+	    $myStud=array_map('q',$myStud);
                 $tool_content .= "<option value='$myStud[user_id]'>$myStud[nom] $myStud[prenom]</option>";
 		$a++;
 	}
@@ -210,6 +212,7 @@ function reverseAll(cbList) {
 				ORDER BY nom, prenom");
 	$a=0;
 	while ($myProf = mysql_fetch_array($resultProf)) {
+	    $myProf=array_map('q',$myProf);
 		$tool_content .= "<option value='$myProf[user_id]'>$myProf[nom] $myProf[prenom]</option>";
 		$a++;
 	}

@@ -69,6 +69,10 @@ $tool_content = "";
 
 // Send email after form post
 if (isset($_POST['submit']) && ($_POST['body_mail'] != "") && ($_POST['submit'] == $langSend)) {
+	if ($_POST['token'] != $_SESSION['token']) {
+		header("location:". $passurl."?msg=3");
+		exit();
+	}
 	// Where to send the email
 	if ($_POST['sendTo'] == "0") {
 		// All users
@@ -116,6 +120,7 @@ $langEmail : $emailhelpdesk
   </tr>
   <tr>
     <th>&nbsp;</th>
+    <input type='hidden' name='token' value=".$_SESSION['token'].">
     <td><input type=\"submit\" name=\"submit\" value=\"$langSend\"></input></td>
   </tr>
   </tbody>

@@ -73,7 +73,7 @@ if (!isset($changePass)) {
   <tr>
     <th class=\"left\">&nbsp;</th>
     <td><input type=\"submit\" name=\"submit\" value=\"$langModify\"></td>
-    <input type='hidden' name='token' value=".$_SESSION['token']."></input>
+    <input type='hidden' name='token' value=".$_SESSION['token'].">
   </tr>
   </tbody>
   </table>
