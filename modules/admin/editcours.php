@@ -110,6 +110,7 @@ if (isset($c)) {
 	$sql = mysql_query(
 		"SELECT * FROM cours WHERE code = '".mysql_real_escape_string($c)."'");
 	$row = mysql_fetch_array($sql);
+	$row = array_map('htmlspecialchars', $row);
 	// Display course information and link to edit
 	$tool_content .= "
   <table class=\"FormData\" width=\"99%\" align=\"left\">
