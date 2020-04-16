@@ -153,6 +153,7 @@ foreach (array("pre" => $langpres,
 
     $k = 0;
     while ($mycours = mysql_fetch_array($result)) {
+        $mycours = array_map('htmlspecialchars', $mycours);
         if ($mycours['visible'] == 2) {
             $codelink = "<a href='../../courses/$mycours[k]/'>$mycours[i]</a>&nbsp;<small>(" . $mycours['c'] . ")</small>";
         } else {
