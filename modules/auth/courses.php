@@ -78,6 +78,7 @@ if (isset($_POST["submit"])) {
                 $course_info = db_query("SELECT fake_code, password FROM cours WHERE cours_id = $cid");
                 if ($course_info) {
                         $row = mysql_fetch_array($course_info);
+                        $row=array_map('q',$row);
                         if (!empty($row['password']) and $row['password'] != autounquote($_POST['pass' . $cid])) {
                                 $errorExists = true;
                                 $restrictedCourses[] = $row['fake_code'];
@@ -176,6 +177,7 @@ function getfacfromfc( $dep_id) {
 	$dep_id = intval( $dep_id);
 
 	$fac = mysql_fetch_row(db_query("SELECT name FROM faculte WHERE id = '$dep_id'"));
+	$fac=array_map('q',$fac);
 	if (isset($fac[0]))
 		return $fac[0];
 	else
@@ -184,6 +186,7 @@ function getfacfromfc( $dep_id) {
 
 function getfcfromuid($uid) {
 	$res = mysql_fetch_row(db_query("SELECT department FROM user WHERE user_id = '$uid'"));
+	$res=array_map('q',$res);
 	if (isset($res[0]))
 		return $res[0];
 	else
@@ -195,7 +198,7 @@ function getdepnumcourses($fac) {
 	"SELECT count(code)
 	FROM cours_faculte
 	WHERE facid='$fac'" ));
-	return $res[0];
+	return q($res[0]);
 }
 
 function expanded_faculte($fac_name, $facid, $uid) {
@@ -211,6 +214,7 @@ function expanded_faculte($fac_name, $facid, $uid) {
                                  FROM cours_user, cours
                                  WHERE cours_user.cours_id = cours.cours_id AND user_id = ".$uid);
 	while ($row = mysql_fetch_array($usercourses)) {
+	    $row=array_map('q',$row);
 	 	$myCourses[$row['cours_id']] = $row;
 	}
 
@@ -229,6 +233,7 @@ function expanded_faculte($fac_name, $facid, $uid) {
 		$retString .= "<tr><td><div align='right'>";
 		$counter = 1;
 		while ($typesArray = mysql_fetch_array($typesresult)) {
+		    $typesArray=array_map('q',$typesArray);
 			$t = $typesArray['type'];
 			// make the plural version of type (eg pres, posts, etc)
 			// this is for fetching the proper translations
@@ -310,6 +315,7 @@ function expanded_faculte($fac_name, $facid, $uid) {
                 $retString .= "\n    <tbody>";
                 $k=0;
                 while ($mycours = mysql_fetch_array($result)) {
+                        $mycours=array_map('q',$mycours);
                         $cid = $mycours['cid'];
                         $course_title = q($mycours['i']);
                         $password = q($mycours['password']);
@@ -387,6 +393,7 @@ function collapsed_facultes_vert($fc) {
 		ORDER BY cours.faculte");
 
 	while ($fac = mysql_fetch_array($result)) {
+	    $fac=array_map('q',$fac);
 		$retString .= "<a href='?fc=$fac[id]' class='normal'>$fac[f]</a>";
 
 		$n = db_query("SELECT COUNT(*) FROM cours

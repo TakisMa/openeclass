@@ -69,6 +69,7 @@ $searchurl = "";
 
 // Manage list limits
 $countcourses = mysql_fetch_array(mysql_query("SELECT COUNT(*) AS cnt FROM cours"));
+$countcourses=array_map('q',$countcourses);
 $fulllistsize = $countcourses['cnt'];
 $listsize = 15;
 $limit = isset($_GET['limit'])?$_GET['limit']:0;
@@ -78,17 +79,17 @@ if (isset($search) && $search=="yes") {
 	$searchurl = "&search=yes";
 	// Search from post form
 	if (isset($search_submit)) {
-		$searchtitle = $_SESSION['searchtitle'] = $formsearchtitle;
-		$searchcode = $_SESSION['searchcode'] = $formsearchcode;
-		$searchtype = $_SESSION['searchtype'] = $formsearchtype;
-		$searchfaculte = $_SESSION['searchfaculte'] = $formsearchfaculte;
+		$searchtitle = $_SESSION['searchtitle'] = q($formsearchtitle);
+		$searchcode = $_SESSION['searchcode'] = q($formsearchcode);
+		$searchtype = $_SESSION['searchtype'] = q($formsearchtype);
+		$searchfaculte = $_SESSION['searchfaculte'] = q($formsearchfaculte);
 	}
 	// Search from session
 	else {
-		$searchtitle = $_SESSION['searchtitle'];
-		$searchcode = $_SESSION['searchcode'];
-		$searchtype = $_SESSION['searchtype'];
-		$searchfaculte = $_SESSION['searchfaculte'];
+		$searchtitle = q($_SESSION['searchtitle']);
+		$searchcode = q($_SESSION['searchcode']);
+		$searchtype = q($_SESSION['searchtype']);
+		$searchfaculte = q($_SESSION['searchfaculte']);
 	}
 	// Search for courses
 	$searchcours=array();
@@ -118,6 +119,7 @@ if (isset($search) && $search=="yes") {
 // Normal list, no search, select all courses
 else {
 	$a=mysql_fetch_array(mysql_query("SELECT COUNT(*) FROM cours"));
+	$a=array_map('q',$a);
 	$caption .= "".$langManyExist.": <b>".$a[0]." $langCourses</b>";
 	$sql = mysql_query("SELECT faculte, code, intitule, titulaires, visible, cours_id FROM cours 
 			ORDER BY faculte,code LIMIT ".$limit.",".$listsize."");
@@ -151,6 +153,7 @@ $tool_content .= "<table class=\"FormData\" width=\"99%\" align=\"left\">
 $k = 0;
 for ($j = 0; $j < mysql_num_rows($sql); $j++) {
 	$logs = mysql_fetch_array($sql);
+	$logs=array_map('q',$logs);
 	if ($k%2 == 0) {
 		$tool_content .= "<tr>";
 	} else {

@@ -93,6 +93,7 @@ $tool_content = "";
 if (!isset($a)) {
 	// Count available faculties
 	$a=mysql_fetch_array(mysql_query("SELECT COUNT(*) FROM faculte"));
+	$a=array_map('q',$a);
 	// Construct a table
 	$tool_content .= "<table width='99%' class='FormData' align='left'>
 	<tbody>
@@ -114,6 +115,7 @@ if (!isset($a)) {
 	// For all faculties display some info
 	for ($j = 0; $j < mysql_num_rows($sql); $j++) {
 		$logs = mysql_fetch_array($sql);
+		$logs=array_map('q',$logs);
 		if ($k%2==0) {
 			$tool_content .= "\n  <tr>";
 		} else {
@@ -140,6 +142,10 @@ if (!isset($a)) {
 elseif ($a == 1)  {
 	if (isset($add)) {
 		// Check for empty fields
+        if ($_POST['token'] != $_SESSION['token']) {
+            header("location:". $passurl."?msg=3");
+            exit();
+        }
 		if (empty($codefaculte) or empty($faculte)) {
 			$tool_content .= "<p>".$langEmptyFaculte."</p><br />";
 			$tool_content .= "<center><p>
@@ -182,6 +188,7 @@ elseif ($a == 1)  {
 		</tr>
 		<tr>
 		<th>&nbsp;</th>
+		<input type='hidden' name='token' value=".$_SESSION['token'].">
 		<td><input type='submit' name='add' value='".$langAdd."' /></td>
 		</tr>
 		</tbody>
@@ -210,6 +217,10 @@ elseif ($a == 2) {
 elseif ($a == 3)  {
         $c = @intval($_REQUEST['c']);
 	if (isset($_POST['edit'])) {
+        if ($_POST['token'] != $_SESSION['token']) {
+            header("location:". $passurl."?msg=3");
+            exit();
+        }
 		// Check for empty fields
                 $faculte = $_POST['faculte'];
 		if (empty($faculte)) {
@@ -241,6 +252,7 @@ elseif ($a == 3)  {
 		$sql = "SELECT code, name FROM faculte WHERE id=$c";
 		$result = mysql_query($sql);
 		$myrow = mysql_fetch_array($result);
+		$myrow=array_map('q',$myrow);
 		// Display form for edit faculte information
 		$tool_content .= "<form method='post' action='$_SERVER[PHP_SELF]?a=3'>";
 		$tool_content .= "<table width='99%' class='FormData'>
@@ -260,6 +272,7 @@ elseif ($a == 3)  {
 		<tr>
 		<th>&nbsp;</th>
 		<td><input type='hidden' name='c' value='$c' />
+		<input type='hidden' name='token' value=".$_SESSION['token'].">
 		<input type='submit' name='edit' value='$langAcceptChanges' />
 		</td>
 		</tr>
