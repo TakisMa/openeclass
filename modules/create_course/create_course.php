@@ -247,77 +247,26 @@ if (isset($_POST['back1']) or !isset($_POST['visit'])) {
 	<td colspan='2'>
 	<table>
 	<tr>
-	<td width='30' ><img src=\"../../template/classic/img/calendar_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
-	<td width='200'>$langAgenda</td>
-	<td width='30' ><input name=\"subsystems[]\" type=\"checkbox\" value=\"1\" checked=\"checked\" /></td>
-	<th width='2' >&nbsp;</th>
 	<td width='30' >&nbsp;<img src=\"../../template/classic/img/dropbox_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
 	<td width='200'>$langDropBox</td>
 	<td width='30' ><input type=\"checkbox\" name=\"subsystems[]\" value=\"15\" /></td>
 	</tr>
 	<tr>
-	<td><img src=\"../../template/classic/img/links_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
-	<td>$langLinks</td>
-	<td><input name=\"subsystems[]\" type=\"checkbox\" value=\"2\" checked=\"checked\" /></td>
-	<th>&nbsp;</th>
-	<td>&nbsp;<img src=\"../../template/classic/img/groups_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
-	<td>$langGroups</td>
-	<td><input type=\"checkbox\" name=\"subsystems[]\" value=\"16\" /></td>
-	</tr>
-	<tr>
-	<td><img src=\"../../template/classic/img/docs_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
-	<td>$langDoc</td>
-	<td><input name=\"subsystems[]\" type=\"checkbox\" value=\"3\" checked=\"checked\" /></td>
-	<th>&nbsp;</th>
 	<td>&nbsp;<img src=\"../../template/classic/img/chat_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
 	<td>$langConference</td>
 	<td><input type=\"checkbox\" name=\"subsystems[]\" value=\"19\" /></td>
-	</tr>
-	<tr>
-	<td><img src=\"../../template/classic/img/video_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
-	<td>$langVideo</td>
-	<td><input name=\"subsystems[]\" type=\"checkbox\" value=\"4\"  /></td>
-	<th>&nbsp;</th>
-	<td>&nbsp;<img src=\"../../template/classic/img/description_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
-	<td>$langCourseDescription</td>
-	<td><input type=\"checkbox\" name=\"subsystems[]\" value=\"20\" checked=\"checked\" /></td>
 	</tr>
 	<tr>
 	<td><img src=\"../../template/classic/img/assignments_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
 	<td>$langWorks</td>
 	<td><input type=\"checkbox\" name=\"subsystems[]\" value=\"5\" /></td>
 	<th>&nbsp;</th>
-	<td>&nbsp;<img src=\"../../template/classic/img/questionnaire_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
-	<td>$langQuestionnaire</td>
-	<td><input type=\"checkbox\" name=\"subsystems[]\" value=\"21\" /></td>
-	</tr>
-	<tr>
-	<td><img src=\"../../template/classic/img/announcements_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
-	<td>$langAnnouncements</td>
-	<td><input type=\"checkbox\" name=\"subsystems[]\" value=\"7\" checked=\"checked\"/></td>
-	<th>&nbsp;</th>
-	<td>&nbsp;<img src=\"../../template/classic/img/lp_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
-	<td>$langLearnPath</td>
-	<td><input type=\"checkbox\" name=\"subsystems[]\"  value=\"23\" /></td>
 	</tr>
 	<tr>
 	<td><img src=\"../../template/classic/img/forum_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
 	<td>$langForums</td>
 	<td><input type=\"checkbox\" name=\"subsystems[]\" value=\"9\" /></td>
 	<th>&nbsp;</th>
-	<td>&nbsp;<img src=\"../../template/classic/img/wiki_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
-	<td>$langWiki</td>
-	<td><input type=\"checkbox\" name=\"subsystems[]\" value=\"26\" /></td>
-	</tr>
-	<tr>
-	<td><img src=\"../../template/classic/img/exercise_on.gif\" alt=\"\" height=\"16\" width=\"16\"></td>
-	<td>$langExercices</td>
-	<td><input type=\"checkbox\" name=\"subsystems[]\" value=\"10\" /></td>
-	<th>&nbsp;</th>
-	<td>&nbsp;</td>
-	<td>&nbsp;</td>
-	<td>&nbsp;</td>
-	</tr>
 	</table><br />
 	</td>
 	</tr>
