@@ -91,11 +91,12 @@ $sql = "SELECT f.forum_type, f.forum_name
 
 $result = db_query($sql, $currentCourseID);
 $myrow = mysql_fetch_array($result);
- 
+ $myrow=array_map('q',$myrow);
 $forum_name = own_stripslashes($myrow["forum_name"]);
 $nameTools = $forum_name;
 
 $topic_count = mysql_fetch_row(db_query("SELECT COUNT(*) FROM topics WHERE forum_id = '$forum'"));
+$topic_count=q($topic_count);
 $total_topics = $topic_count[0];
 
 if ($total_topics > $topics_per_page) { 
@@ -174,6 +175,7 @@ $result = db_query($sql, $currentCourseID);
 
 if (mysql_num_rows($result) > 0) { // topics found
 	while($myrow = mysql_fetch_array($result)) {
+	    $myrow=array_map('q',$myrow);
 		$tool_content .= "<tr>";
 		$replys = $myrow["topic_replies"];
 		$last_post = $myrow["post_time"];
@@ -239,6 +241,7 @@ if (mysql_num_rows($result) > 0) { // topics found
 		$tool_content .= "<td class='Forum_leftside1'>$myrow[prenom1] $myrow[nom1]<br />$last_post</td>";
 		list($topic_action_notify) = mysql_fetch_row(db_query("SELECT notify_sent FROM forum_notify 
 			WHERE user_id = $uid AND topic_id = $myrow[topic_id] AND course_id = $cours_id", $mysqlMainDb));
+        $topic_action_notify=q($topic_action_notify);
 		if (!isset($topic_action_notify)) {
 			$topic_link_notify = FALSE;
 			$topic_icon = '_off';
