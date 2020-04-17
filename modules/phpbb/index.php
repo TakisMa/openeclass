@@ -116,7 +116,7 @@ $sql = "SELECT c.* FROM catagories c, forums f
 
 $result = db_query($sql, $currentCourseID); 
 $total_categories = mysql_num_rows($result);
-
+$total_categories=array_map('q',$total_categories);
 if ($total_categories) {
 	$tool_content .= "<table width='99%' class='ForumSum'>
 	<thead>
@@ -137,6 +137,7 @@ if ($total_categories) {
 		$viewcat = -1;
 	}
 	while ($cat_row = mysql_fetch_array($result)) {
+		$cat_row=array_map('q',$cat_row);
 		$categories[] = $cat_row;
 	}
 	$limit_forums = "";
@@ -149,13 +150,14 @@ if ($total_categories) {
 	$f_res = db_query($sql, $currentCourseID); 
 	$tool_content .= "<tbody>";
 	while ($forum_data = mysql_fetch_array($f_res)) {
+		$forum_data=array_map('q',$forum_data);
 		$forum_row[] = $forum_data;
 	}
 	for($i=0; $i < $total_categories; $i++) {
 		if ($viewcat != -1) {
 			if ($categories[$i][cat_id] != $viewcat) {
 				$title = stripslashes($categories[$i][cat_title]);
-				$tool_content .= "<tr class='Forum'><td colspan='6' class='left'>&nbsp;$title</td></tr>";
+				$tool_content .= "<tr class='Forum'><td colspan='6' class='left'>&nbsp;".q($title)."</td></tr>";
 				continue;
 			}
 		}
@@ -176,6 +178,7 @@ if ($total_categories) {
 			<img src='../../template/classic/img/announcements$icon.gif' title='$langNotify' alt='$langNotify' /></a></td></tr>";
 			
 		@reset($forum_row);
+		$forum_row=array_map('q',$forum_row);
 		for ($x=0; $x < count($forum_row); $x++) {
 			unset($last_post);
 			if ($forum_row[$x]["cat_id"] == $categories[$i]["cat_id"]) {

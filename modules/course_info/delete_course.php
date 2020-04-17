@@ -56,7 +56,7 @@ if($is_adminOfCourse) {
 		<tbody>
 		<tr>
 		<td class=\"caution_NoBorder\" height='60' colspan='3'>
-			<p>$langByDel_A <b>$intitule ($currentCourseID) </b>&nbsp;?  </p>
+			<p>$langByDel_A <b>".q($intitule)." (".q($currentCourseID).") </b>&nbsp;?  </p>
 		</td>
 		</tr>
 		<tr>

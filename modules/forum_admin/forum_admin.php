@@ -162,6 +162,13 @@ if(isset($forumgo)) {
     		cat_id, forum_type FROM forums WHERE forum_id='$forum_id'", $currentCourseID);
 		list($forum_id, $forum_name, $forum_desc, $forum_access, $forum_moderator, $cat_id_1,
 		$forum_type) = mysql_fetch_row($result);
+		$forum_id=q($forum_id);
+		$forum_name=q($forum_name);
+		$forum_desc=q($forum_desc);
+		$forum_access=q($forum_access);
+		$forum_moderator=q( $forum_moderator);
+		$cat_id_1=q($cat_id_1);
+		$forum_type=q($forum_type);
 		$tool_content .= "
 		<form action=\"$_SERVER[PHP_SELF]?forumgosave=yes&ctg=$ctg&cat_id=".@$cat_id."\" method=post onsubmit=\"return checkrequired(this,'forum_name');\">
 		<input type=hidden name=forum_id value=$forum_id>
@@ -185,6 +192,8 @@ if(isset($forumgo)) {
 		<select name=cat_id class=\"auth_input\">";
 		$result = db_query("select cat_id, cat_title from catagories", $currentCourseID);
 		while(list($cat_id, $cat_title) = mysql_fetch_row($result)) {
+			$cat_id=q($cat_id);
+			$cat_title= q($cat_title);
 			if ($cat_id == $cat_id_1) {
 					$tool_content .= "<option value='$cat_id' selected>$cat_title</option>"; 
 				} else {
@@ -204,6 +213,8 @@ if(isset($forumgo)) {
 	elseif(isset($forumcatedit)) {
 		$result = db_query("select cat_id, cat_title from catagories where cat_id='$cat_id'", $currentCourseID);
 		list($cat_id, $cat_title) = mysql_fetch_row($result);
+		$cat_id=q($cat_id);
+		$cat_title= q($cat_title);
 		$tool_content .= "
   		<form action='$_SERVER[PHP_SELF]?forumcatsave=yes' method=post onsubmit=\"return checkrequired(this,'cat_title');\">
     		<input type=hidden name=cat_id value=$cat_id>
@@ -273,6 +284,7 @@ if(isset($forumgo)) {
 				AND notify_sent = 1 AND course_id = $cours_id", $mysqlMainDb);
 		$body_topic_notify = "$langBodyCatNotify $langInCat '$ctg' \n\n$gunet";
 		while ($r = mysql_fetch_array($sql)) {
+			$r=array_map('q',$r);
 			$emailaddr = uid_to_email($r['user_id']);
 			send_mail('', '', '', $emailaddr, $subject_notify, $body_topic_notify, $charset);
 		}

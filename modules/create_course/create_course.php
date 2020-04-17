@@ -132,6 +132,7 @@ if (isset($_POST['back1']) or !isset($_POST['visit'])) {
 	list($homefac) = mysql_fetch_row(db_query("SELECT department FROM user WHERE user_id=$uid"));
 	$facs = db_query("SELECT id, name FROM faculte order by id");
 	while ($n = mysql_fetch_array($facs)) {
+	    $n=array_map('q',$n);
 		$fac[$n['id']] = $n['name'];
 	}
 	$tool_content .= selection($fac, 'faculte', $homefac);
@@ -376,7 +377,7 @@ if (isset($_POST['create_course'])) {
         $tool_content .= doImportFromBetaCMSAfterCourseCreation($repertoire, $mysqlMainDb, $webDir);
         // --------------------------------------------------
         $tool_content .= "
-                <p class=\"success_small\">$langJustCreated: &nbsp;<b>$intitule</b></p>
+                <p class=\"success_small\">$langJustCreated: &nbsp;<b>".q($intitule)."</b></p>
                 <p><small>$langEnterMetadata</small></p><br />
                 <p align='center'>&nbsp;<a href='../../courses/$repertoire/index.php' class=mainpage>$langEnter</a>&nbsp;</p>";
 } // end of submit

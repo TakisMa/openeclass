@@ -122,6 +122,7 @@ function get_last_post($id, $thedb, $type) {
       $sql = "SELECT p.post_time FROM posts p WHERE p.poster_id = '$id' LIMIT 1";
       break;
    }
+    $sql=q($sql);
    if(!$result = db_query($sql, $thedb))
      return($langError);
    if(!$myrow = mysql_fetch_array($result))
@@ -989,7 +990,7 @@ function forum_category($id) {
 	global $currentCourseID;
 	
 	if ($r = mysql_fetch_row(db_query("SELECT cat_id FROM forums WHERE forum_id=$id", $currentCourseID))) {
-		return $r[0];
+		return q($r[0]);
 	} else {
 		return FALSE;
 	}
@@ -1001,7 +1002,7 @@ function category_name($id) {
 	global $currentCourseID;
 	
 	if ($r = mysql_fetch_row(db_query("SELECT cat_title FROM catagories WHERE cat_id=$id", $currentCourseID))) {
-		return $r[0];
+		return q($r[0]);
 	} else {
 		return FALSE;
 	}
