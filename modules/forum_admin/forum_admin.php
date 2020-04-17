@@ -87,11 +87,11 @@ if(isset($forumgo)) {
 	$result = db_query("SELECT forum_id, forum_name, forum_desc, forum_access, forum_moderator, forum_type 
 			FROM forums where cat_id='$cat_id'", $currentCourseID);
 	if ($result and mysql_num_rows($result) > 0) {
-		$tool_content .= "<form action=\"$_SERVER[PHP_SELF]?forumgoadd=yes&ctg=".q($ctg)."&cat_id=$cat_id\" method=post>
+		$tool_content .= "<form action=\"$_SERVER[PHP_SELF]?forumgoadd=yes&ctg=$ctg&cat_id=$cat_id\" method=post>
 		<table width=99% class=\"ForumAdmSum\">
 		<tbody>
 		<tr class=\"odd\">
-		<td colspan=\"4\"><small>$langForCat: <b>".q($ctg)."</b></small></td>
+		<td colspan=\"4\"><small>$langForCat: <b>$ctg</b></small></td>
 		</tr>
 		<tr>
 		<th width='10'>$langID</th>
@@ -103,12 +103,6 @@ if(isset($forumgo)) {
 		$i=1;
 		while(list($forum_id, $forum_name, $forum_desc, $forum_access,
 			$forum_moderator, $forum_type) = mysql_fetch_row($result)) {
-			$forum_id=q($forum_id);
-			$forum_name=q($forum_name);
-			$forum_desc=q($forum_desc);
-			$forum_access=q($forum_access);
-			$forum_moderator=q( $forum_moderator);
-			$forum_type=q($forum_type);
 				if ($i%2==1) {
 					$tool_content .= "\n<tr>";
 				} else {
@@ -344,7 +338,7 @@ if(isset($forumgo)) {
 		$result = db_query("SELECT cat_id, cat_title FROM catagories ORDER BY cat_id", $currentCourseID);
 		$i=1;
 		while(list($cat_id, $cat_title) = mysql_fetch_row($result)) {
-			$cat_title=q($cat_title);
+			$cat_title=htmlspecialchars($cat_title);
 			$gets = db_query("SELECT COUNT(*) AS total FROM forums WHERE cat_id=$cat_id", $currentCourseID);
 			$numbers = mysql_fetch_array($gets);
 			list($forum_cat_action_notify) = mysql_fetch_row(db_query("SELECT notify_sent FROM forum_notify 
