@@ -116,7 +116,6 @@ $sql = "SELECT c.* FROM catagories c, forums f
 
 $result = db_query($sql, $currentCourseID); 
 $total_categories = mysql_num_rows($result);
-$total_categories=array_map('q',$total_categories);
 if ($total_categories) {
 	$tool_content .= "<table width='99%' class='ForumSum'>
 	<thead>
@@ -178,7 +177,6 @@ if ($total_categories) {
 			<img src='../../template/classic/img/announcements$icon.gif' title='$langNotify' alt='$langNotify' /></a></td></tr>";
 			
 		@reset($forum_row);
-		$forum_row=array_map('q',$forum_row);
 		for ($x=0; $x < count($forum_row); $x++) {
 			unset($last_post);
 			if ($forum_row[$x]["cat_id"] == $categories[$i]["cat_id"]) {

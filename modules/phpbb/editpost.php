@@ -91,6 +91,7 @@ if ($is_adminOfCourse) { // course admin
 			exit();
 		}
 		$myrow = mysql_fetch_array($result);
+		$myrow=array_map('q',$myrow);
 		$forum_id = $myrow["forum_id"];
 		$topic_id = $myrow["topic_id"];
 		$this_post_time = $myrow["post_time"];
@@ -98,8 +99,10 @@ if ($is_adminOfCourse) { // course admin
 		$date = date("Y-m-d H:i");
 	
 		$row1 = mysql_fetch_row(db_query("SELECT forum_name FROM forums WHERE forum_id='$forum_id'"));
+		$row1=array_map('q',$row1);
 		$forum_name = $row1[0];
 		$row2 = mysql_fetch_row(db_query("SELECT topic_title FROM topics WHERE topic_id='$topic_id'"));
+        $row=array_map('q',$row2);
 		$topic_title = $row2[0];
 	
 		$nameTools = $langReply;
@@ -225,6 +228,7 @@ if ($is_adminOfCourse) { // course admin
 		}
 		
 		if (!$myrow = mysql_fetch_array($result)) {
+		    $myrow=array_map('q',$myrow);
 			$tool_content .= "$langErrorTopicSelect";
 			draw($tool_content, 2, 'phpbb', $head_content);
 			exit();
@@ -283,6 +287,7 @@ if ($is_adminOfCourse) { // course admin
 			exit();
 		}
 		$myrow = mysql_fetch_array($result);
+		$myrow=array_map('q',$myrow);
 		if (isset($user_logged_in) && $user_logged_in) {
 			if($user_level <= 2) {
 				if($user_level == 2 && !is_moderator($forum, $uid, $currentCourseID)) {
