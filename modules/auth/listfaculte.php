@@ -40,6 +40,7 @@ if (isset($result))  {
 	</tr></thead><tbody>";
 	$k = 0;
 	while ($fac = mysql_fetch_array($result)) {
+	    $fac=array_map('q',$fac);
 		if ($k%2==0) {
 			$tool_content .= "\n  <tr>";
 		} else {
@@ -51,6 +52,7 @@ if (isset($result))  {
 		<font style=\"color: #a33033;\">($fac[code])</font>";
 		$n=mysql_query("SELECT COUNT(*) FROM cours_faculte WHERE facid=$fac[id]");
 		$r=mysql_fetch_array($n);
+		$r=array_map('q',$r);
 		$tool_content .= "<font style='color: #CAC3B5;'>&nbsp;&nbsp;-&nbsp;&nbsp;$langThereAre $r[0]&nbsp;".  ($r[0] == 1? $langAvCours: $langAvCourses) . "</small></td>
 		</tr>";
 		$k++;

@@ -48,6 +48,7 @@ if (!isset($fc)) {
 // security check
 $fc = intval($fc);
 $fac = mysql_fetch_row(mysql_query("SELECT name FROM faculte WHERE id = " . $fc));
+$fac=array_map('q',$fac);
 if (!($fac = $fac[0])) {
     die("ERROR: no faculty with id $fc");
 }
@@ -76,6 +77,7 @@ $numoftypes = mysql_num_rows($typesresult);;
 if ($numoftypes > 1) {
     $counter = 1;
     while ($typesArray = mysql_fetch_array($typesresult)) {
+        $typesArray=array_map('q',$typesArray);
         $t = $typesArray['types'];
         // make the plural version of type (eg pres, posts, etc)
         // this is for fetching the proper translations
