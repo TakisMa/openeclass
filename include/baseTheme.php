@@ -341,27 +341,27 @@ function draw($toolContent, $menuTypeID, $tool_css = null, $head_content = null,
 
 				$t->set_var ( 'BREAD_HREF_FRONT', '<a href="{BREAD_LINK}">' );
 				$t->set_var ( 'BREAD_LINK', $step ["url"] );
-				$t->set_var ( 'BREAD_TEXT', $step ["name"] );
+				$t->set_var ( 'BREAD_TEXT', q($step ["name"]) );
 				$t->set_var ( 'BREAD_ARROW', '&#187;' );
 				$t->set_var ( 'BREAD_HREF_END', '</a>' );
 				$t->parse ( 'breadCrumbStart', 'breadCrumbStartBlock', true );
 
 				$breadIterator ++;
 
-				$pageTitle .= " | " . $step ["name"];
+				$pageTitle .= " | " . q($step ["name"]);
 			}
 		}
 
 		if (isset ( $page_name ) && ! $homePage) {
 
 			$t->set_var ( 'BREAD_HREF_FRONT', '' );
-			$t->set_var ( 'BREAD_TEXT', $page_name );
+			$t->set_var ( 'BREAD_TEXT', q($page_name) );
 			$t->set_var ( 'BREAD_ARROW', '&#187;' );
 			$t->set_var ( 'BREAD_HREF_END', '' );
 
 			$t->parse ( 'breadCrumbStart', 'breadCrumbStartBlock', true );
 			$breadIterator ++;
-			$pageTitle .= " | " . $page_name;
+			$pageTitle .= " | " . q($page_name);
 
 		}
 

@@ -93,6 +93,7 @@ if (!$result = db_query($sql, $currentCourseID)) {
 	exit();
 }
 if (!$myrow = mysql_fetch_array($result)) {
+    $myrow=array_map('q',$myrow);
 	$tool_content .= $langErrorTopicSelect;
 	draw($tool_content, 2);
 	exit();
@@ -115,6 +116,7 @@ if ($paging and $total > $posts_per_page) {
 
 $result = db_query($sql, $currentCourseID);
 $myrow = mysql_fetch_array($result);
+$myrow=array_map('q',$myrow);
 $topic_subject = own_stripslashes($myrow["topic_title"]);
 $lock_state = $myrow["topic_status"];
 
@@ -234,6 +236,7 @@ if (!$result = db_query($sql, $currentCourseID)) {
 $myrow = mysql_fetch_array($result);
 $count = 0;
 do {
+    $myrow=array_map('q',$myrow);
 	if(!($count % 2))
 		$row_color = 'topic_row1';
 	else 

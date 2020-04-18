@@ -79,7 +79,7 @@ if ($is_adminOfCourse || $is_admin) {
 	$tool_content .= "
         <li><a href='../forum_admin/forum_admin.php'>$langAdm</a></li>";
 }
-$tool_content .= "<li><a href='newtopic.php?forum=$forum'>$langNewTopic</a></li></ul></div><br />";
+$tool_content .= "<li><a href='newtopic.php?forum=".q($forum)."'>$langNewTopic</a></li></ul></div><br />";
 
 /*
 * Retrieve and present data from course's forum
@@ -91,7 +91,7 @@ $sql = "SELECT f.forum_type, f.forum_name
 
 $result = db_query($sql, $currentCourseID);
 $myrow = mysql_fetch_array($result);
- $myrow=array_map('q',$myrow);
+$myrow=array_map('q',$myrow);
 $forum_name = own_stripslashes($myrow["forum_name"]);
 $nameTools = $forum_name;
 
