@@ -41,6 +41,7 @@ function display_assignments()
                                  "<tr><th width='70%'>$langTitle</th><th>$langVisible<th>$m[deadline]</th>" .
                                  "<th>$langChoice</th></tr>\n";
                 while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+                        $row = array_map('htmlspecialchars', $row);
                         $visible = $row['active']?
                                 "<img title='$langActive' src='../../template/classic/img/visible.gif' />":
                                 "<img title='$langInactive' src='../../template/classic/img/invisible.gif' />";

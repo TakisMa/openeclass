@@ -33,6 +33,7 @@ function display_forum()
         $result = db_query("SELECT * FROM forums WHERE cat_id <> 1", $currentCourseID);
         $foruminfo = array();
         while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+            $row = array_map('htmlspecialchars', $row);
                 $foruminfo[] = array(
 			'id' => $row['forum_id'],
 		        'name' => $row['forum_name'],

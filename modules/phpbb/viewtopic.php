@@ -119,6 +119,7 @@ $myrow = mysql_fetch_array($result);
 $myrow=array_map('q',$myrow);
 $topic_subject = own_stripslashes($myrow["topic_title"]);
 $lock_state = $myrow["topic_status"];
+$topic = htmlspecialchars($topic);
 
 if (!add_units_navigation(TRUE)) {
 	$navigation[]= array ("url"=>"index.php", "name"=> $langForums);
