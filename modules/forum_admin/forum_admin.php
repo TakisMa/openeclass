@@ -210,10 +210,7 @@ if(isset($forumgo)) {
 		</td>
 		</tr></thead></table></form>";
 	}
-	if ($_POST['token'] != $_SESSION['token']) {
-		header("location:". $passurl."?msg=3");
-		exit();
-	}
+
 	// edit forum category
 	elseif(isset($forumcatedit)) {
 		$result = db_query("select cat_id, cat_title from catagories where cat_id='$cat_id'", $currentCourseID);
@@ -243,12 +240,22 @@ if(isset($forumgo)) {
 
 	// save forum category
 	elseif (isset($forumcatsave)) {
+
+		if ($_POST['token'] != $_SESSION['token']) {
+			header("location:". $passurl."?msg=3");
+			exit();
+		}
 		db_query("update catagories set cat_title='$cat_title' where cat_id='$cat_id'", $currentCourseID);
 		$tool_content .= "\n<p class=\"success_small\">$langNameCatMod<br /><a href=\"$_SERVER[PHP_SELF]?forumadmin=yes\">$langBack</a></p>";
 	}
 
 	// forum go save
 	elseif(isset($forumgosave)) {
+
+		if ($_POST['token'] != $_SESSION['token']) {
+			header("location:". $passurl."?msg=3");
+			exit();
+		}
 		$nameTools = $langDelete;
 		$navigation[]= array ("url"=>"../forum_admin/forum_admin.php", "name"=> $langOrganisation);
 		$result = @db_query("SELECT user_id FROM users WHERE username='$forum_moderator'", $currentCourseID);
@@ -263,6 +270,11 @@ if(isset($forumgo)) {
 
 	// forum add category
 	elseif(isset($forumcatadd)) {
+
+		if ($_POST['token'] != $_SESSION['token']) {
+			header("location:". $passurl."?msg=3");
+			exit();
+		}
 		db_query("INSERT INTO catagories VALUES (NULL, '$catagories', NULL)", $currentCourseID);
 		$tool_content .= "\n<p class='success_small'>$langCatAdded<br />
 		<a href='$_SERVER[PHP_SELF]?forumadmin=yes'>$langBack</a></p>";
@@ -270,6 +282,11 @@ if(isset($forumgo)) {
 
 	// forum go add
 	elseif(isset($forumgoadd)) {
+
+		if ($_POST['token'] != $_SESSION['token']) {
+			header("location:". $passurl."?msg=3");
+			exit();
+		}
 		$nameTools = $langAdd;
 		$navigation[]= array ("url"=>"../forum_admin/forum_admin.php", "name"=> $langOrganisation);
 		$result = @db_query("SELECT user_id FROM users WHERE username='$forum_moderator'", $currentCourseID);
@@ -302,6 +319,7 @@ if(isset($forumgo)) {
 
 	// forum delete category
 	elseif(isset($forumcatdel)) {
+
 		$result = db_query("SELECT forum_id FROM forums WHERE cat_id='$cat_id'", $currentCourseID);
 		while(list($forum_id) = mysql_fetch_row($result)) {
 			db_query("DELETE from topics where forum_id=$forum_id", $currentCourseID);
@@ -314,6 +332,7 @@ if(isset($forumgo)) {
 
 	// forum delete
 	elseif(isset($forumgodel)) {
+
 		$nameTools = $langDelete;
 		$navigation[]= array ("url"=>"../forum_admin/forum_admin.php", "name"=> $langOrganisation);
 		db_query("DELETE FROM topics WHERE forum_id=$forum_id", $currentCourseID);
@@ -382,6 +401,7 @@ if(isset($forumgo)) {
 		<td><input type=text name=catagories size=50 class='FormData_InputText'></td>
 		</tr>
 		<tr><th>&nbsp;</th>
+		<input type='hidden' name='token' value=".$_SESSION['token'].">
 		<td><input type=hidden name=forumcatadd value=yes><input type=submit value='$langAdd'></td>
 		</tr>
 		</thead>
