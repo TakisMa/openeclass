@@ -148,6 +148,7 @@ if(isset($forumgo)) {
 		<td>
 		<input type=hidden name=cat_id value='$cat_id'>
 		<input type=hidden name=forumgoadd value=yes>
+		<input type='hidden' name='token' value=".$_SESSION['token'].">
 		<input type=submit value=$langAdd>
 		</td>
 		</tr></tbody></table>
@@ -203,12 +204,16 @@ if(isset($forumgo)) {
 		$tool_content .= "</select></td></tr>
 		<tr>
 		<th>&nbsp;</th>
+		<input type='hidden' name='token' value=".$_SESSION['token'].">
 		<td><input type=hidden name=forumgosave value=yes>
 		<input type=submit value='$langSave'>
 		</td>
 		</tr></thead></table></form>";
 	}
-
+	if ($_POST['token'] != $_SESSION['token']) {
+		header("location:". $passurl."?msg=3");
+		exit();
+	}
 	// edit forum category
 	elseif(isset($forumcatedit)) {
 		$result = db_query("select cat_id, cat_title from catagories where cat_id='$cat_id'", $currentCourseID);
@@ -228,6 +233,7 @@ if(isset($forumgo)) {
     		</tr>
     		<tr>
       		<th>&nbsp;</th>
+      		<input type='hidden' name='token' value=".$_SESSION['token'].">
       		<td><input type=submit value='$langSave'></td>
     		</tr>
     		</thead>
