@@ -41,6 +41,7 @@
 include '../../include/baseTheme.php';
 include '../../include/sendMail.inc.php';
 include 'auth.inc.php';
+
 $nameTools = $langUserDetails;
 // Main body
 $navigation[] = array("url"=>"registration.php", "name"=> $langNewUser);

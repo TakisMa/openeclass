@@ -199,7 +199,7 @@ function draw($toolContent, $menuTypeID, $tool_css = null, $head_content = null,
 		//show user's name and surname on the user bar
 		if (isset($_SESSION['uid']) && strlen ($nom) > 0) {
 			$t->set_var ( 'LANG_USER', $langUserHeader );
-			$t->set_var ( 'USER_NAME',q($prenom) );
+			$t->set_var ( 'USER_NAME', q($prenom) );
 			$t->set_var ( 'USER_SURNAME', q($nom). ", " );
 		} else {
                         $t->set_var ( 'LANG_USER', '' );
