@@ -187,6 +187,7 @@ tCont2;
 	$result = db_query($sql);
 	while ($res = mysql_fetch_array($result))
 	{
+	    $res = array_map('htmlspecialchars', $res);
 		$tool_content .= "
            <option value=".$res['user_id'].">".$res['name']."</option>";
 	}
