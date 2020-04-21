@@ -81,6 +81,7 @@ if (isset($_POST['username'])) {
 } 
 
 $tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>$langUsername: <input type='text' name='username' />
-<input type='hidden' name='token' value=".$_SESSION['token'].">
-</form>";
+<input type='hidden' name='token' value=".$_SESSION['token']."/>
+</form>
+";
 draw($tool_content,3,'admin');
