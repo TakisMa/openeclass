@@ -471,7 +471,7 @@ foreach ($dropbox_person -> sentWork as $w)
 	$tool_content .= <<<tCont12
 
 		<td width="3"><img src="../../template/classic/img/outbox.gif" title="htmlspecialchars($w->title, ENT_QUOTES, 'UTF-8')" /></td>
-		<td ><a href="$ahref" target="_blank">
+		<td ><a href="$ahref" target="_blank"  download>
 		$w->title</a>
         <small>&nbsp;&nbsp;&nbsp;($fSize kB)</small>
         <br />
