@@ -39,12 +39,17 @@ $navigation[] = array("url" => "index.php", "name" => $langAdmin);
 $tool_content = '';
 
 if (isset($_POST['username'])) {
+    if ($_POST['token'] != $_SESSION['token']) {
+        header("location:". $passurl."?msg=3");
+        exit();
+    }
 	$result = db_query("SELECT user_id, nom, username, password, prenom, statut, email, iduser is_admin, perso, lang
                 FROM user LEFT JOIN admin
                 ON user.user_id = admin.iduser
                 WHERE username=" . autoquote($_POST['username']));
 	if (mysql_num_rows($result) > 0) {
                 $myrow = mysql_fetch_array($result);
+                $myrow=array_map('q',$myrow);
                 $_SESSION['uid'] = $myrow["user_id"];
                 $_SESSION['nom'] = $myrow["nom"];
                 $_SESSION['prenom'] = $myrow["prenom"];
@@ -71,9 +76,11 @@ if (isset($_POST['username'])) {
                 header('Location: ' . $urlServer);
                 exit;
         } else {
-                $tool_content = "<div class='caution_small'>" . sprintf($langChangeUserNotFound, $_POST['username']) . "</div>";
+                $tool_content = "<div class='caution_small'>" . sprintf($langChangeUserNotFound, q($_POST['username'])) . "</div>";
         }
 } 
 
-$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>$langUsername: <input type='text' name='username' /></form>";
+$tool_content .= "<form action='$_SERVER[PHP_SELF]' method='post'>$langUsername: <input type='text' name='username' />
+<input type='hidden' name='token' value=".$_SESSION['token'].">
+</form>";
 draw($tool_content,3,'admin');

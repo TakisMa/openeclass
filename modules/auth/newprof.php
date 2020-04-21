@@ -81,6 +81,7 @@ if (!isset($submit)) {
         $deps=mysql_query("SELECT id, name FROM faculte order by id");
         while ($dep = mysql_fetch_array($deps))
         {
+            $dep=array_map('q',$dep);
         	$tool_content .= "<option value='$dep[id]'>$dep[name]</option>\n";
         }
         $tool_content .= "</select>
