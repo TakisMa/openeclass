@@ -118,6 +118,7 @@ if(empty($search_terms_title) && empty($search_terms_keywords) && empty($search_
     $tbl_content = "";
     while ($mycours = mysql_fetch_array($result))
     {
+    	$mycours = array_map('htmlspecialchars', $mycours);
 	    $show_entry = FALSE; //flag gia emfanish apotelesmatwn se mia grammh tou array efoson entopistoun apotelesmata
 		if (!empty($search_terms_title)) $show_entry = match_arrays($search_terms_title, $mycours['intitule']);
 		if (!empty($search_terms_keywords)) if($show_entry == FALSE) $show_entry = match_arrays($search_terms_keywords, $mycours['course_keywords']);
