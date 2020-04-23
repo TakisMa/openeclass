@@ -141,9 +141,17 @@ if ($is_adminOfCourse) {
 	} elseif (isset($sid)) {
 		show_submission($sid);
 	} elseif (isset($_POST['new_assign'])) {
+        if ($_POST['token'] != $_SESSION['token']) {
+            header("location:". $passurl."?msg=3");
+            exit();
+        }
 		add_assignment($title, $comments, $desc, "$WorkEnd", $group_submissions);
 		show_assignments();
 	} elseif (isset($grades)) {
+        if ($_POST['token'] != $_SESSION['token']) {
+            header("location:". $passurl."?msg=3");
+            exit();
+        }
 		$nameTools = $m['WorkView'];
 		$navigation[] = array("url"=>"work.php", "name"=> $langWorks);
 		submit_grades($grades_id, $grades);
@@ -396,6 +404,7 @@ function new_assignment()
     </tr>
     <tr>
       <th>&nbsp;</th>
+      <input type='hidden' name='token' value=".$_SESSION['token'].">
       <td><input type='submit' name='new_assign' value='$langAdd' /></td>
     </tr>
     </tbody>
@@ -510,6 +519,7 @@ cData;
     </tr>
     <tr>
       <th class='left'>&nbsp;</th>
+      <input type='hidden' name='token' value=".$_SESSION['token'].">
       <td><input type='submit' name='do_edit' value='$langEdit' /></td>
     </tr>
     </tbody>
@@ -525,6 +535,10 @@ cData;
 // edit assignment
 function edit_assignment($id)
 {
+    if ($_POST['token'] != $_SESSION['token']) {
+        header("location:?msg=3");
+        exit();
+    }
 	global $tool_content, $langBackAssignment, $langEditSuccess, $langEditError, $langWorks, $langEdit;
 
 	$nav[] = array("url"=>"work.php", "name"=> $langWorks);
@@ -958,6 +972,7 @@ cData;
     <tbody>
     <tr>
       <th class='left' width='220'>&nbsp;</th>
+      <input type='hidden' name='token' value=".$_SESSION['token'].">
       <td><input type='submit' name='submit_grades' value='${langGradeOk}'></td>
     </tr>
     </tbody>
