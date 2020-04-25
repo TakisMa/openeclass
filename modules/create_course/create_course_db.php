@@ -380,7 +380,7 @@ mysql_query("INSERT INTO accueil VALUES (
         '$langGroups',
         '../../modules/group/group.php',
         'groups',
-        '".$sbsystems[15]."',
+        '".$sbsystems[16]."',
         '0',
         '',
         'MODULE_ID_GROUPS'
@@ -391,7 +391,7 @@ mysql_query("INSERT INTO accueil VALUES (
         '$langDropBox',
         '../../modules/dropbox/index.php',
         'dropbox',
-        '".$sbsystems[16]."',
+        '".$sbsystems[15]."',
         '0',
         '',
         'MODULE_ID_DROPBOX'

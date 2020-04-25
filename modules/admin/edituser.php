@@ -205,6 +205,7 @@ $tool_content .= "
       <input type='hidden' name='u' value='$u' />
       <input type='hidden' name='u_submitted' value='1' />
       <input type='hidden' name='registered_at' value='".$info['registered_at']."' />
+      <input type='hidden' name='token' value=".$_SESSION['token'].">
       <input type='submit' name='submit_edituser' value='$langModify' />
     </td>
   </tr>
@@ -286,8 +287,11 @@ $tool_content .= "
 				$tool_content .= $langCannotDeleteAdmin;
 			}
 		}
-	}  else { // if the form was submitted then update user
-
+	}
+	else { // if the form was submitted then update user
+        if ($_POST['token'] != $_SESSION['token']) {
+            exit();
+        }
 		// get the variables from the form and initialize them
 		$fname = isset($_POST['fname'])?$_POST['fname']:'';
 		$lname = isset($_POST['lname'])?$_POST['lname']:'';

@@ -41,6 +41,9 @@ if (isset($submit) && (!isset($ldap_submit)) && !isset($changePass)) {
         if (!$allow_username_change) {
                 $username_form = $uname;
         }
+        if ($_REQUEST['token'] != $_SESSION['token']) {
+            exit();
+        }
 	// check if username exists
 	$username_check=mysql_query("SELECT username FROM user WHERE username='".escapeSimple($username_form)."'");
 	while ($myusername = mysql_fetch_array($username_check))
@@ -302,6 +305,7 @@ if ((!isset($changePass)) || isset($_POST['submit'])) {
     </tr>
 	<tr>
       <th>&nbsp;</th>
+      <input type='hidden' class='FormData_InputText' name='token' value=".$_SESSION['token'].">
       <td><input type=\"Submit\" name=\"submit\" value=\"$langModify\"></td>
     </tr>
     </tbody>
