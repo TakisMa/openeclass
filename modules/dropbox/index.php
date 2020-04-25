@@ -117,10 +117,10 @@ if (isset($_GET['mailing']))  // RH: Mailing detail: no form upload
 elseif(isset($_REQUEST['upload']) && $_REQUEST['upload'] == 1)
 {
 
-	$tool_content .= <<<tCont2
+    $tool_content .= <<<tCont2
     <form method="post" action="dropbox_submit.php" enctype="multipart/form-data" onsubmit="return checkForm(this)">
 tCont2;
-	$tool_content .= "
+    $tool_content .= "
     <table width='99%' class='FormData'>
     <tbody>
     <tr>
@@ -131,12 +131,13 @@ tCont2;
       <th class='left'>".$dropbox_lang['file']." :</th>
       <td><input type='file' name='file' size='35' />
           <input type='hidden' name='dropbox_unid' value='$dropbox_unid' />
+          <input type='hidden' name='token' value=".$_SESSION['token']."/>
       </td>
     </tr>";
 
 
-	if ($dropbox_person -> isCourseTutor || $dropbox_person -> isCourseAdmin)
-	{
+    if ($dropbox_person -> isCourseTutor || $dropbox_person -> isCourseAdmin)
+    {
 		$reciepientsSize= 5;
 	}
 	else

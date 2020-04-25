@@ -83,6 +83,7 @@ require_once("dropbox_class.inc.php");
  * - VALIDATE POSTED DATA
  * - UPLOAD NEW FILE
  */
+if($_SESSION['token'] != $_POST['token']) exit();
 if (isset($_POST["submitWork"]))
 {
 	require("../../include/lib/fileUploadLib.inc.php");

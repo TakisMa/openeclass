@@ -910,7 +910,7 @@ cData;
 				$m['comments']."</a> (+)";
 			}
 			$uid_2_name = uid_to_name($row['uid']);
-			$stud_am = mysql_fetch_array(db_query("SELECT am from $mysqlMainDb.user WHERE user_id = '$row[uid]'")); //TODO::pithano SQL Injection. To am elegxetai apo to xristi!
+			$stud_am = mysql_fetch_array(db_query("SELECT am from $mysqlMainDb.user WHERE user_id = '$row[uiad]'"));
 			$tool_content .= <<<cData
 
       <tr>
