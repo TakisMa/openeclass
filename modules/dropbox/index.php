@@ -297,7 +297,7 @@ if (!isset($_GET['mailing']))  // RH: Mailing detail: no received files
         <td width=\"3\"><img src=\"../../template/classic/img/inbox.gif\" title=\"$dropbox_lang[receivedTitle]\" /></td>
         <td>";
 
-		$tool_content .= "<a href='dropbox_download.php?id=".urlencode($w->id)."' target=_blank>".$w->title."</a>";
+		$tool_content .= "<a href='dropbox_download.php?id=".urlencode($w->id)."' target=_blank download>".$w->title."</a>";
 
 		$fSize = ceil(($w->filesize)/1024);
 		$tool_content .= <<<tCont9
