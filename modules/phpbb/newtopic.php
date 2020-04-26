@@ -101,7 +101,7 @@ if (!does_exists($forum, $currentCourseID, "forum")) {
 	$tool_content .= $langErrorPost;
 }
 
-if (isset($submit) && $submit) {
+if (isset($submit) && $submit && ($_POST['token'] == $_SESSION['token'])) {
 	$subject = strip_tags($subject);
 	if (trim($message) == '' || trim($subject) == '') {
 		$tool_content .= $langEmptyMsg;
@@ -237,6 +237,7 @@ if (isset($submit) && $submit) {
 	<tr>
 	<th>&nbsp;</th>
 	<td><input type='hidden' name='forum' value='$forum' />
+	<input type='hidden' name='token' value=".$_SESSION['token'].">
 	<input type='submit' name='submit' value='$langSubmit' />&nbsp;
 	<input type='submit' name='cancel' value='$langCancelPost' />
 	</td></tr>

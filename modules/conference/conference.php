@@ -98,7 +98,9 @@ $tool_content .= "
       <b>$langTypeMessage</b><br />
       <input type='text' name='msg' size='80'style='border: 1px solid #CAC3B5; background: #fbfbfb;'>
       <input type='hidden' name='chatLine'>
+      <input type='hidden' name='token' value=".$_SESSION['token'].">
       <input type='submit' value=' >> '>
+      
 
     </td>
   </tr>

@@ -78,7 +78,7 @@ include("functions.php"); // application logic for phpBB
  * Actual code starts here
  *****************************************************************************/
 if ($is_adminOfCourse) { // course admin 
-	if (isset($submit) && $submit) {
+	if (isset($submit) && $submit && $_POST['token']==$_SESSION['token']) {
 		$sql = "SELECT * FROM posts WHERE post_id = '$post_id'";
 		if (!$result = db_query($sql, $currentCourseID)) {
 			$tool_content .= $langErrorDataOne;
@@ -257,6 +257,7 @@ if ($is_adminOfCourse) { // course admin
 			<input type='hidden' name='forum' value='$forum' />
 			<input type='hidden' name='topic' value='$topic' />
 			<input type='hidden' name='post_id' value='$post_id' />
+			<input type='hidden' name='token' value='".$_SESSION['token']."' />
 			<input type='submit' name='logging_in' value='$langEnter' />
 			</td>
 			</tr>
